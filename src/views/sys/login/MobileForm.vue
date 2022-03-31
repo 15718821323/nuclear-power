@@ -1,6 +1,6 @@
 <template>
   <template v-if="getShow">
-    <LoginFormTitle class="enter-x" />
+    <!-- <LoginFormTitle class="enter-x" /> -->
     <Form class="p-4 enter-x" :model="formData" :rules="getFormRules" ref="formRef">
       <FormItem name="mobile" class="enter-x">
         <Input
@@ -23,9 +23,9 @@
         <Button type="primary" size="large" block @click="handleLogin" :loading="loading">
           {{ t('sys.login.loginButton') }}
         </Button>
-        <Button size="large" block class="mt-4" @click="handleBackLogin">
+        <!-- <Button size="large" block class="mt-4" @click="handleBackLogin">
           {{ t('sys.login.backSignIn') }}
-        </Button>
+        </Button> -->
       </FormItem>
     </Form>
   </template>

@@ -61,7 +61,10 @@ export default {
     backSignIn: '返回',
     signInFormTitle: '登录',
     mobileSignInFormTitle: '手机登录',
+    passwordSignInFormTitle: '密码登录',
     qrSignInFormTitle: '二维码登录',
+    weChatSignInFormTitle: '微信登录',
+    dingDingSignInFormTitle: '钉钉登录',
     signUpFormTitle: '注册',
     forgetFormTitle: '重置密码',
 
@@ -70,7 +73,7 @@ export default {
     policy: '我同意xxx隐私政策',
     scanSign: `扫码后点击"确认"，即可完成登录`,
 
-    loginButton: '登录',
+    loginButton: '立即登录',
     registerButton: '注册',
     rememberMe: '记住我',
     forgetPassword: '忘记密码?',

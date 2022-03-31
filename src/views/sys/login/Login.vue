@@ -1,21 +1,23 @@
 <template>
-  <div :class="prefixCls" class="relative w-full h-full px-4">
-    <AppLocalePicker
-      class="absolute text-white top-4 right-4 enter-x xl:text-gray-600"
-      :showText="false"
-      v-if="!sessionTimeout && showLocale"
-    />
-    <AppDarkModeToggle class="absolute top-3 right-7 enter-x" v-if="!sessionTimeout" />
+    <div :class="prefixCls" class="relative w-full h-full">
+        <AppLocalePicker
+            class="absolute text-white top-4 right-4 enter-x xl:text-gray-600"
+            :showText="false"
+            v-if="!sessionTimeout && showLocale"
+            :style="{ color: 'white' }"
+        />
+        <!-- <AppDarkModeToggle class="absolute top-3 right-7 enter-x" v-if="!sessionTimeout" /> -->
 
-    <span class="-enter-x xl:hidden">
-      <AppLogo :alwaysShowTitle="true" />
-    </span>
+        <span class="-enter-x xl:hidden">
+            <AppLogo :alwaysShowTitle="false" />
+        </span>
 
-    <div class="container relative h-full py-2 mx-auto sm:px-10">
-      <div class="flex h-full">
-        <div class="hidden min-h-full pl-4 mr-4 xl:flex xl:flex-col xl:w-6/12">
-          <AppLogo class="-enter-x" />
-          <div class="my-auto">
+        <!-- <div class="container relative h-full py-2 mx-auto sm:px-10"> -->
+        <div class="relative h-full mx-auto">
+            <div class="flex h-full">
+                <div class="hidden min-h-full pl-4 xl:flex xl:flex-col xl:w-6/12">
+                    <AppLogo class="-enter-x" />
+                    <!-- <div class="my-auto">
             <img
               :alt="title"
               src="../../../assets/svg/login-box-bg.svg"
@@ -27,205 +29,282 @@
             <div class="mt-5 font-normal text-white text-md dark:text-gray-500 -enter-x">
               {{ t('sys.login.signInDesc') }}
             </div>
-          </div>
+          </div> -->
+                </div>
+                <div class="flex w-full h-full py-5 xl:h-auto xl:py-0 xl:my-0 xl:w-6/12">
+                    <div
+                        :class="`${prefixCls}-form`"
+                        class="
+                            relative
+                            w-full
+                            p-16
+                            mx-auto
+                            my-auto
+                            rounded-md
+                            shadow-md
+                            xl:ml-16 xl:bg-transparent
+                            sm:px-8
+                            xl:p-16 xl:shadow-none
+                            sm:w-3/4
+                            lg:w-2/4
+                            xl:w-auto
+                            enter-x
+                        "
+                    >
+                        <LoginForm />
+                        <ForgetPasswordForm />
+                        <RegisterForm />
+                        <MobileForm />
+                        <QrCodeForm />
+                        <div
+                            class="flex justify-between enter-x py-8"
+                            :class="`${prefixCls}-sign-in-way`"
+                        >
+                            {{ t('sys.login.otherSignIn') }}
+                            <span class="dashed-span">
+                                <WechatFilled class="dashed-span-icon" />
+                                <span>{{ t('sys.login.weChatSignInFormTitle') }}</span>
+                            </span>
+                            <span class="dashed-span">
+                                <DingdingOutlined class="dashed-span-icon" />
+                                <span>{{ t('sys.login.dingDingSignInFormTitle') }}</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="flex w-full h-full py-5 xl:h-auto xl:py-0 xl:my-0 xl:w-6/12">
-          <div
-            :class="`${prefixCls}-form`"
-            class="
-              relative
-              w-full
-              px-5
-              py-8
-              mx-auto
-              my-auto
-              rounded-md
-              shadow-md
-              xl:ml-16 xl:bg-transparent
-              sm:px-8
-              xl:p-4 xl:shadow-none
-              sm:w-3/4
-              lg:w-2/4
-              xl:w-auto
-              enter-x
-            "
-          >
-            <LoginForm />
-            <ForgetPasswordForm />
-            <RegisterForm />
-            <MobileForm />
-            <QrCodeForm />
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
 </template>
 <script lang="ts" setup>
-  import { computed } from 'vue';
-  import { AppLogo } from '/@/components/Application';
-  import { AppLocalePicker, AppDarkModeToggle } from '/@/components/Application';
-  import LoginForm from './LoginForm.vue';
-  import ForgetPasswordForm from './ForgetPasswordForm.vue';
-  import RegisterForm from './RegisterForm.vue';
-  import MobileForm from './MobileForm.vue';
-  import QrCodeForm from './QrCodeForm.vue';
-  import { useGlobSetting } from '/@/hooks/setting';
-  import { useI18n } from '/@/hooks/web/useI18n';
-  import { useDesign } from '/@/hooks/web/useDesign';
-  import { useLocaleStore } from '/@/store/modules/locale';
+    import { computed } from 'vue';
+    import { WechatFilled, DingdingOutlined } from '@ant-design/icons-vue';
+    import { AppLogo } from '/@/components/Application';
+    import { AppLocalePicker, AppDarkModeToggle } from '/@/components/Application';
+    import LoginForm from './LoginForm.vue';
+    import ForgetPasswordForm from './ForgetPasswordForm.vue';
+    import RegisterForm from './RegisterForm.vue';
+    import MobileForm from './MobileForm.vue';
+    import QrCodeForm from './QrCodeForm.vue';
+    import { useGlobSetting } from '/@/hooks/setting';
+    import { useI18n } from '/@/hooks/web/useI18n';
+    import { useDesign } from '/@/hooks/web/useDesign';
+    import { useLocaleStore } from '/@/store/modules/locale';
 
-  defineProps({
-    sessionTimeout: {
-      type: Boolean,
-    },
-  });
+    defineProps({
+        sessionTimeout: {
+            type: Boolean,
+        },
+    });
 
-  const globSetting = useGlobSetting();
-  const { prefixCls } = useDesign('login');
-  const { t } = useI18n();
-  const localeStore = useLocaleStore();
-  const showLocale = localeStore.getShowPicker;
-  const title = computed(() => globSetting?.title ?? '');
+    const globSetting = useGlobSetting();
+    const { prefixCls } = useDesign('login');
+    const { t } = useI18n();
+    const localeStore = useLocaleStore();
+    const showLocale = localeStore.getShowPicker;
+    const title = computed(() => globSetting?.title ?? '');
 </script>
 <style lang="less">
-  @prefix-cls: ~'@{namespace}-login';
-  @logo-prefix-cls: ~'@{namespace}-app-logo';
-  @countdown-prefix-cls: ~'@{namespace}-countdown-input';
-  @dark-bg: #293146;
+    @prefix-cls: ~'@{namespace}-login';
+    @logo-prefix-cls: ~'@{namespace}-app-logo';
+    @countdown-prefix-cls: ~'@{namespace}-countdown-input';
+    @dark-bg: #293146;
+    @sign-prefix-cls: ~'@{prefix-cls}-sign-in-way';
 
-  html[data-theme='dark'] {
-    .@{prefix-cls} {
-      background-color: @dark-bg;
+    @gray-color: #cbcbcb;
 
-      &::before {
-        background-image: url(/@/assets/svg/login-bg-dark.svg);
-      }
-
-      .ant-input,
-      .ant-input-password {
-        background-color: #232a3b;
-      }
-
-      .ant-btn:not(.ant-btn-link):not(.ant-btn-primary) {
-        border: 1px solid #4a5569;
-      }
-
-      &-form {
-        background: transparent !important;
-      }
-
-      .app-iconify {
-        color: #fff;
-      }
+    body{
+        background-color: #2e5dd3;
+        background-image: url(@/assets/images/bg.jpg);
+        background-position: 50%;
+        background-size: cover;
+        background-repeat: no-repeat;
     }
 
-    input.fix-auto-fill,
-    .fix-auto-fill input {
-      -webkit-text-fill-color: #c9d1d9 !important;
-      box-shadow: inherit !important;
+    .@{sign-prefix-cls}{
+        color: @gray-color;
     }
-  }
-
-  .@{prefix-cls} {
-    min-height: 100%;
-    overflow: hidden;
-    @media (max-width: @screen-xl) {
-      background-color: #293146;
-
-      .@{prefix-cls}-form {
-        background-color: #fff;
-      }
+    .app-iconify{
+        color: white;
     }
-
-    &::before {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      margin-left: -48%;
-      background-image: url(/@/assets/svg/login-bg.svg);
-      background-position: 100%;
-      background-repeat: no-repeat;
-      background-size: auto 100%;
-      content: '';
-      @media (max-width: @screen-xl) {
-        display: none;
-      }
-    }
-
-    .@{logo-prefix-cls} {
-      position: absolute;
-      top: 12px;
-      height: 30px;
-
-      &__title {
-        font-size: 16px;
-        color: #fff;
-      }
-
-      img {
-        width: 32px;
-      }
-    }
-
-    .container {
-      .@{logo-prefix-cls} {
+    .dashed-span{
         display: flex;
-        width: 60%;
-        height: 80px;
-
-        &__title {
-          font-size: 24px;
-          color: #fff;
-        }
-
-        img {
-          width: 48px;
-        }
-      }
-    }
-
-    &-sign-in-way {
-      .anticon {
-        font-size: 22px;
-        color: #888;
+        align-items: center;
+        border: 1px dashed @gray-color;
+        border-radius: 3px;
+        color: @gray-color;
+        overflow: hidden;
+        padding-right: 10px;
         cursor: pointer;
+        transition: .2s;
 
-        &:hover {
-          color: @primary-color;
+        .dashed-span-icon{
+            background: rgba(0, 0, 0, .2);
+            margin-right: 5px;
+            transition: .2s;
         }
-      }
+
+        &:hover{
+            border-color: white;
+            color: white;
+            .dashed-span-icon{
+                color: white;
+                background: rgba(255, 255, 255, .25);
+            }
+        }
     }
+    // html[data-theme='dark'] {
+    //   .@{prefix-cls} {
+    //     background-color: @dark-bg;
 
-    input:not([type='checkbox']) {
-      min-width: 360px;
+    //     // &::before {
+    //     //   background-image: url(/@/assets/svg/login-bg-dark.svg);
+    //     // }
 
-      @media (max-width: @screen-xl) {
-        min-width: 320px;
-      }
+    //     .ant-btn:not(.ant-btn-link):not(.ant-btn-primary) {
+    //       border: 1px solid #4a5569;
+    //     }
 
-      @media (max-width: @screen-lg) {
-        min-width: 260px;
-      }
+    //     &-form {
+    //       background: transparent !important;
+    //     }
 
-      @media (max-width: @screen-md) {
-        min-width: 240px;
-      }
+    //     .app-iconify {
+    //       color: #fff;
+    //     }
+    //   }
 
-      @media (max-width: @screen-sm) {
-        min-width: 160px;
-      }
+    //   input.fix-auto-fill,
+    //   .fix-auto-fill input {
+    //     -webkit-text-fill-color: #c9d1d9 !important;
+    //     box-shadow: inherit !important;
+    //   }
+    // }
+
+    .@{prefix-cls} {
+        min-height: 100%;
+        overflow: hidden;
+
+        .@{prefix-cls}-form {
+            background-color: rgba(0,16,56,0.75);
+            // border-radius: 14px;
+            // backdrop-filter: blur(23px);
+            .ant-form{
+                min-height: 250px;
+            }
+        }
+
+        .ant-input,
+        .ant-input-password{
+            background: transparent;
+            color: white;
+        }
+
+        .ant-input-prefix{
+            color: @gray-color;
+        }
+        .ant-input-clear-icon,
+        .ant-input-password-icon{
+            color: #575B9B4D;
+            font-size: 14px;
+        }
+        .ant-input-affix-wrapper {
+            background-color: rgba(0, 11, 38, 0.4);
+            border-color: transparent;
+            border-radius: 8px;
+            &:hover{
+                border-color: #40a9ff;
+            }
+        }
+
+        &::before {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            margin-left: -48%;
+            // background-image: url(/@/assets/svg/login-bg.svg);
+            background-position: 100%;
+            background-repeat: no-repeat;
+            background-size: auto 100%;
+            content: '';
+            @media (max-width: @screen-xl) {
+                display: none;
+            }
+        }
+
+        .@{logo-prefix-cls} {
+            position: absolute;
+            top: 12px;
+            // height: 30px;
+
+            &__title {
+            font-size: 16px;
+                color: #fff;
+            }
+
+            img {
+                width: 264px;
+            }
+        }
+
+        .container {
+            .@{logo-prefix-cls} {
+                display: flex;
+                width: 60%;
+                height: 80px;
+
+                &__title {
+                    font-size: 24px;
+                    color: #fff;
+                }
+
+                img {
+                    width: 48px;
+                }
+            }
+        }
+
+        &-sign-in-way {
+            .anticon {
+                font-size: 22px;
+                color: #888;
+                cursor: pointer;
+
+                &:hover {
+                    color: @primary-color;
+                }
+            }
+        }
+
+        input:not([type='checkbox']) {
+            min-width: 200px;
+
+            @media (max-width: @screen-xl) {
+                min-width: 160px;
+            }
+
+            @media (max-width: @screen-lg) {
+                min-width: 120px;
+            }
+
+            @media (max-width: @screen-md) {
+                min-width: 100px;
+            }
+
+            @media (max-width: @screen-sm) {
+                min-width: 160px;
+            }
+        }
+
+        .@{countdown-prefix-cls} input {
+            min-width: unset;
+        }
+
+        .ant-divider-inner-text {
+            font-size: 12px;
+            color: @text-color-secondary;
+        }
     }
-
-    .@{countdown-prefix-cls} input {
-      min-width: unset;
-    }
-
-    .ant-divider-inner-text {
-      font-size: 12px;
-      color: @text-color-secondary;
-    }
-  }
 </style>

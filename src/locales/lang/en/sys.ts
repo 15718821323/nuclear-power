@@ -66,7 +66,10 @@ export default {
   login: {
     backSignIn: 'Back sign in',
     mobileSignInFormTitle: 'Mobile sign in',
+    passwordSignInFormTitle: 'Password sign in',
     qrSignInFormTitle: 'Qr code sign in',
+    weChatSignInFormTitle: 'WeChat sign in',
+    dingDingSignInFormTitle: 'DingDing sign in',
     signInFormTitle: 'Sign in',
     signUpFormTitle: 'Sign up',
     forgetFormTitle: 'Reset password',

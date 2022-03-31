@@ -1,5 +1,13 @@
 <template>
-  <LoginFormTitle v-show="getShow" class="enter-x" />
+  <!-- <LoginFormTitle v-show="getShow" class="enter-x" /> -->
+  <div class="type-list">
+    <span class="type-list-item" @click="setLoginState(LoginStateEnum.LOGIN)" :class="{'active': unref(getLoginState) === LoginStateEnum.LOGIN}">
+      {{ t('sys.login.passwordSignInFormTitle') }}
+    </span>
+    <span class="type-list-item" @click="setLoginState(LoginStateEnum.MOBILE)" :class="{'active': unref(getLoginState) === LoginStateEnum.MOBILE}">
+      {{ t('sys.login.mobileSignInFormTitle') }}
+    </span>
+  </div>
   <Form
     class="p-4 enter-x"
     :model="formData"
@@ -11,25 +19,44 @@
     <FormItem name="account" class="enter-x">
       <Input
         size="large"
+        allowClear
         v-model:value="formData.account"
         :placeholder="t('sys.login.userName')"
         class="fix-auto-fill"
-      />
+      >
+        <template #prefix>
+          <UserOutlined/>
+        </template>
+      </Input>
     </FormItem>
     <FormItem name="password" class="enter-x">
       <InputPassword
         size="large"
+        allowClear
         visibilityToggle
         v-model:value="formData.password"
         :placeholder="t('sys.login.password')"
-      />
+      >
+        <template #prefix>
+          <LockOutlined />
+        </template>
+      </InputPassword>
+    </FormItem>
+
+    <FormItem class="enter-x">
+      <Button type="primary" size="large" block @click="handleLogin" :loading="loading">
+        {{ t('sys.login.loginButton') }}
+      </Button>
+      <!-- <Button size="large" class="mt-4 enter-x" block @click="handleRegister">
+        {{ t('sys.login.registerButton') }}
+      </Button> -->
     </FormItem>
 
     <ARow class="enter-x">
       <ACol :span="12">
         <FormItem>
           <!-- No logic, you need to deal with it yourself -->
-          <Checkbox v-model:checked="rememberMe" size="small">
+          <Checkbox v-model:checked="rememberMe" size="small" :style="{color: '#CBCBCB'}">
             {{ t('sys.login.rememberMe') }}
           </Checkbox>
         </FormItem>
@@ -43,54 +70,28 @@
         </FormItem>
       </ACol>
     </ARow>
-
-    <FormItem class="enter-x">
-      <Button type="primary" size="large" block @click="handleLogin" :loading="loading">
-        {{ t('sys.login.loginButton') }}
-      </Button>
-      <!-- <Button size="large" class="mt-4 enter-x" block @click="handleRegister">
-        {{ t('sys.login.registerButton') }}
-      </Button> -->
-    </FormItem>
-    <ARow class="enter-x">
-      <ACol :md="8" :xs="24">
-        <Button block @click="setLoginState(LoginStateEnum.MOBILE)">
-          {{ t('sys.login.mobileSignInFormTitle') }}
-        </Button>
-      </ACol>
-      <ACol :md="8" :xs="24" class="!my-2 !md:my-0 xs:mx-0 md:mx-2">
-        <Button block @click="setLoginState(LoginStateEnum.QR_CODE)">
-          {{ t('sys.login.qrSignInFormTitle') }}
-        </Button>
-      </ACol>
-      <ACol :md="7" :xs="24">
-        <Button block @click="setLoginState(LoginStateEnum.REGISTER)">
-          {{ t('sys.login.registerButton') }}
-        </Button>
-      </ACol>
-    </ARow>
-
-    <Divider class="enter-x">{{ t('sys.login.otherSignIn') }}</Divider>
-
-    <div class="flex justify-evenly enter-x" :class="`${prefixCls}-sign-in-way`">
-      <GithubFilled />
-      <WechatFilled />
-      <AlipayCircleFilled />
-      <GoogleCircleFilled />
-      <TwitterCircleFilled />
-    </div>
   </Form>
+  <!-- <div class="flex justify-between enter-x py-8" :class="`${prefixCls}-sign-in-way`">
+    {{ t('sys.login.otherSignIn') }}
+    <span class="dashed-span">
+      <WechatFilled class="dashed-span-icon"/>
+      <span>{{ t('sys.login.weChatSignInFormTitle') }}</span>
+    </span>
+    <span class="dashed-span">
+      <DingdingOutlined class="dashed-span-icon"/>
+      <span>{{ t('sys.login.dingDingSignInFormTitle') }}</span>
+    </span>
+  </div> -->
 </template>
 <script lang="ts" setup>
   import { reactive, ref, unref, computed } from 'vue';
 
   import { Checkbox, Form, Input, Row, Col, Button, Divider } from 'ant-design-vue';
   import {
-    GithubFilled,
     WechatFilled,
-    AlipayCircleFilled,
-    GoogleCircleFilled,
-    TwitterCircleFilled,
+    DingdingOutlined,
+    UserOutlined,
+    LockOutlined,
   } from '@ant-design/icons-vue';
   import LoginFormTitle from './LoginFormTitle.vue';
 
@@ -119,7 +120,7 @@
   const rememberMe = ref(false);
 
   const formData = reactive({
-    account: 'vben',
+    account: 'admin',
     password: '123456',
   });
 
@@ -157,3 +158,35 @@
     }
   }
 </script>
+<style lang="less" scoped>
+  @prefix-cls: ~'@{namespace}-login';
+  .type-list{
+    padding: 15px 0;
+    &-item{
+      min-width: 90px;
+      padding: 10px 0;
+      color: #CDCDCD;
+      cursor: pointer;
+      transition: .2s;
+      position: relative;
+
+      &:not(:last-of-type){
+        margin-right: 30px;
+      }
+
+      &.active{
+        color: white;
+
+        &::after{
+          content: ' ';
+          position: absolute;
+          bottom: 3px;
+          left: 25%;
+          width: 50%;
+          height: 2px;
+          background: white;
+        }
+      }
+    }
+  }
+</style>
