@@ -1,75 +1,57 @@
+<!--
+ * @Author: hebing
+ * @Interface: 
+ * @Description: 
+ * @Date: 2022-04-01 11:40:25
+ * @LastEditors: hebing
+ * @LastEditTime: 2022-04-01 18:04:36
+ * @FilePath: /nuclear-power/src/views/sys/login/Login.vue
+-->
 <template>
-    <div :class="prefixCls" class="relative w-full h-full">
+    <div :class="prefixCls">
         <AppLocalePicker
-            class="absolute text-white top-4 right-4 enter-x xl:text-gray-600"
+            class="absolute text-white top-4 right-4 enter-x"
             :showText="false"
             v-if="!sessionTimeout && showLocale"
             :style="{ color: 'white' }"
         />
-        <!-- <AppDarkModeToggle class="absolute top-3 right-7 enter-x" v-if="!sessionTimeout" /> -->
-
-        <span class="-enter-x xl:hidden">
-            <AppLogo :alwaysShowTitle="false" />
+        <!-- 演示登录卡大小切换 -->
+        <span class="absolute text-white top-4 right-14 enter-x">
+            切换登录卡大小：<Switch v-model:checked="isLarge" />
         </span>
 
-        <!-- <div class="container relative h-full py-2 mx-auto sm:px-10"> -->
-        <div class="relative h-full mx-auto">
-            <div class="flex h-full">
-                <div class="hidden min-h-full pl-4 xl:flex xl:flex-col xl:w-6/12">
-                    <AppLogo class="-enter-x" />
-                    <!-- <div class="my-auto">
-            <img
-              :alt="title"
-              src="../../../assets/svg/login-box-bg.svg"
-              class="w-1/2 -mt-16 -enter-x"
-            />
-            <div class="mt-10 font-medium text-white -enter-x">
-              <span class="inline-block mt-4 text-3xl"> {{ t('sys.login.signInTitle') }}</span>
-            </div>
-            <div class="mt-5 font-normal text-white text-md dark:text-gray-500 -enter-x">
-              {{ t('sys.login.signInDesc') }}
-            </div>
-          </div> -->
-                </div>
-                <div class="flex w-full h-full py-5 xl:h-auto xl:py-0 xl:my-0 xl:w-6/12">
-                    <div
-                        :class="`${prefixCls}-form`"
-                        class="
-                            relative
-                            w-full
-                            p-16
-                            mx-auto
-                            my-auto
-                            rounded-md
-                            shadow-md
-                            xl:ml-16 xl:bg-transparent
-                            sm:px-8
-                            xl:p-16 xl:shadow-none
-                            sm:w-3/4
-                            lg:w-2/4
-                            xl:w-auto
-                            enter-x
-                        "
-                    >
-                        <LoginForm />
-                        <ForgetPasswordForm />
-                        <RegisterForm />
-                        <MobileForm />
-                        <QrCodeForm />
-                        <div
-                            class="flex justify-between enter-x py-8"
-                            :class="`${prefixCls}-sign-in-way`"
-                        >
-                            {{ t('sys.login.otherSignIn') }}
-                            <span class="dashed-span">
-                                <WechatFilled class="dashed-span-icon" />
-                                <span>{{ t('sys.login.weChatSignInFormTitle') }}</span>
+        <div class="logo">
+            <AppLogo class="-enter-x" />
+            <span class="absolute bottom-8 left-30 -enter-x" :style="{ color: '#6184FF' }"
+                >*{{ t('sys.login.unitName') }}</span
+            >
+        </div>
+        <div :class="[`${prefixCls}-container`, { large: isLarge }]" class="enter-x">
+            <div :class="`${prefixCls}-form`">
+                <div :class="`${prefixCls}-form-container`">
+                    <img
+                        :class="`${prefixCls}-form-title`"
+                        src="../../../assets/images/login/title.png"
+                    />
+                    <LoginForm />
+                    <ForgetPasswordForm />
+                    <RegisterForm />
+                    <MobileForm />
+                    <QrCodeForm />
+                    <div :class="`${prefixCls}-sign-in-way`">
+                        {{ t('sys.login.otherSignIn') }}
+                        <span class="dashed-span">
+                            <span class="dashed-span-icon">
+                                <WechatFilled />
                             </span>
-                            <span class="dashed-span">
-                                <DingdingOutlined class="dashed-span-icon" />
-                                <span>{{ t('sys.login.dingDingSignInFormTitle') }}</span>
+                            <span>{{ t('sys.login.weChatSignInFormTitle') }}</span>
+                        </span>
+                        <span class="dashed-span">
+                            <span class="dashed-span-icon">
+                                <DingdingOutlined />
                             </span>
-                        </div>
+                            <span>{{ t('sys.login.dingDingSignInFormTitle') }}</span>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -77,7 +59,9 @@
     </div>
 </template>
 <script lang="ts" setup>
-    import { computed } from 'vue';
+    import { computed, ref } from 'vue';
+    import { useRouter } from 'vue-router';
+    import { Switch } from 'ant-design-vue';
     import { WechatFilled, DingdingOutlined } from '@ant-design/icons-vue';
     import { AppLogo } from '/@/components/Application';
     import { AppLocalePicker, AppDarkModeToggle } from '/@/components/Application';
@@ -90,6 +74,7 @@
     import { useI18n } from '/@/hooks/web/useI18n';
     import { useDesign } from '/@/hooks/web/useDesign';
     import { useLocaleStore } from '/@/store/modules/locale';
+    import { log } from 'console';
 
     defineProps({
         sessionTimeout: {
@@ -103,134 +88,161 @@
     const localeStore = useLocaleStore();
     const showLocale = localeStore.getShowPicker;
     const title = computed(() => globSetting?.title ?? '');
+    // console.log(useRouter.currentRoute.value.path);
+
+    // 控制登录卡片大小
+    const isLarge = ref<boolean>(true);
 </script>
-<style lang="less">
+<style lang="less" scoped>
     @prefix-cls: ~'@{namespace}-login';
     @logo-prefix-cls: ~'@{namespace}-app-logo';
     @countdown-prefix-cls: ~'@{namespace}-countdown-input';
     @dark-bg: #293146;
     @sign-prefix-cls: ~'@{prefix-cls}-sign-in-way';
 
-    @gray-color: #cbcbcb;
-
-    body{
-        background-color: #2e5dd3;
-        background-image: url(@/assets/images/bg.jpg);
-        background-position: 50%;
-        background-size: cover;
-        background-repeat: no-repeat;
-    }
-
-    .@{sign-prefix-cls}{
-        color: @gray-color;
-    }
-    .app-iconify{
-        color: white;
-    }
-    .dashed-span{
-        display: flex;
-        align-items: center;
-        border: 1px dashed @gray-color;
-        border-radius: 3px;
-        color: @gray-color;
-        overflow: hidden;
-        padding-right: 10px;
-        cursor: pointer;
-        transition: .2s;
-
-        .dashed-span-icon{
-            background: rgba(0, 0, 0, .2);
-            margin-right: 5px;
-            transition: .2s;
-        }
-
-        &:hover{
-            border-color: white;
-            color: white;
-            .dashed-span-icon{
-                color: white;
-                background: rgba(255, 255, 255, .25);
-            }
-        }
-    }
-    // html[data-theme='dark'] {
-    //   .@{prefix-cls} {
-    //     background-color: @dark-bg;
-
-    //     // &::before {
-    //     //   background-image: url(/@/assets/svg/login-bg-dark.svg);
-    //     // }
-
-    //     .ant-btn:not(.ant-btn-link):not(.ant-btn-primary) {
-    //       border: 1px solid #4a5569;
-    //     }
-
-    //     &-form {
-    //       background: transparent !important;
-    //     }
-
-    //     .app-iconify {
-    //       color: #fff;
-    //     }
-    //   }
-
-    //   input.fix-auto-fill,
-    //   .fix-auto-fill input {
-    //     -webkit-text-fill-color: #c9d1d9 !important;
-    //     box-shadow: inherit !important;
-    //   }
-    // }
+    @color-gray: #cbcbcb;
+    @color-blue: #40a9ff;
 
     .@{prefix-cls} {
         min-height: 100%;
         overflow: hidden;
+        display: flex;
+        justify-content: space-between;
+        // align-items: center;
 
-        .@{prefix-cls}-form {
-            background-color: rgba(0,16,56,0.75);
-            // border-radius: 14px;
-            // backdrop-filter: blur(23px);
-            .ant-form{
-                min-height: 250px;
-            }
-        }
+        background-color: #2e5dd3;
+        background-image: url(@/assets/images/login/bg.jpg);
+        background-position: 50%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        position: relative;
 
-        .ant-input,
-        .ant-input-password{
-            background: transparent;
-            color: white;
-        }
-
-        .ant-input-prefix{
-            color: @gray-color;
-        }
-        .ant-input-clear-icon,
-        .ant-input-password-icon{
-            color: #575B9B4D;
-            font-size: 14px;
-        }
-        .ant-input-affix-wrapper {
-            background-color: rgba(0, 11, 38, 0.4);
-            border-color: transparent;
-            border-radius: 8px;
-            &:hover{
-                border-color: #40a9ff;
-            }
-        }
-
-        &::before {
+        @circle-1-size: 300px;
+        @circle-2-size: 400px;
+        @circle-color: #0047ff;
+        &::before,
+        &::after{
+            content: ' ';
             position: absolute;
-            top: 0;
+            border-radius: 50%;
+            opacity: .5;
+        }
+        &::before{
+            border: 50px solid @circle-color;
+            width: @circle-1-size;
+            height: @circle-1-size;
             left: 0;
-            width: 100%;
+            top: 0;
+            transform: translate(-65%,-65%);
+        }
+        &::after{
+            border: 70px solid @circle-color;
+            width: @circle-2-size;
+            height: @circle-2-size;
+            right: 0;
+            bottom: 0;
+            transform: translate(60%,60%);
+        }
+
+        .logo{
+            width: 60%;
             height: 100%;
-            margin-left: -48%;
-            // background-image: url(/@/assets/svg/login-bg.svg);
-            background-position: 100%;
-            background-repeat: no-repeat;
-            background-size: auto 100%;
-            content: '';
-            @media (max-width: @screen-xl) {
-                display: none;
+            @media (max-width: @screen-md) {
+                    display: none;
+            }
+
+            .@{logo-prefix-cls}{
+                width: 260px;
+                position: absolute;
+                top: 50px;
+                left: 120px;
+            }
+        }
+        .@{prefix-cls}-container {
+            width: 40%;
+            min-width: 400px;
+            max-width: 600px;
+            display: flex;
+            // justify-content: center;
+            align-items: center;
+
+            &.large{
+                .@{prefix-cls}-form{
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 0;
+                }
+            }
+            .@{prefix-cls}-form{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: rgba(0,16,56,0.75);
+                border-radius: 14px;
+                overflow: hidden;
+                transition: all .3s;
+                &-container {
+                    width: 480px;
+                    padding: 60px;
+                    backdrop-filter: blur(23px);
+                    :deep(.ant-form){
+                        min-height: 325px;
+                    }
+                }
+                &-title{
+                    width: 300px;
+                    height: auto;
+                    display: block;
+                    margin-bottom: 30px;
+                }
+            }
+
+            :deep(.ant-input),
+            :deep(.ant-input-password){
+                background: transparent !important;
+                color: white;
+            }
+
+            :deep(.ant-input-prefix){
+                color: @color-gray;
+            }
+            :deep(.ant-input-clear-icon),
+            :deep(.ant-input-password-icon){
+                color: #575B9B4D;
+                font-size: 14px;
+                transition: .2s;
+                &:hover{
+                    color: @color-blue;
+                }
+            }
+            :deep(.ant-input-affix-wrapper){
+                background-color: rgba(0, 11, 38, 0.4) !important;
+                border-color: transparent;
+                border-radius: 8px;
+                &:hover{
+                    border-color: @color-blue;
+                }
+            }
+            :deep(.ant-input-group){
+                & > .ant-input-affix-wrapper:first-child{
+                    border-top-right-radius: 0;
+                    border-bottom-right-radius: 0;
+                }
+                .ant-input-group-addon{
+                    border-top-left-radius: 0;
+                    border-bottom-left-radius: 0;
+                    background: rgba(249,249,249,0.08);
+                    border-color: transparent;
+                    color: #0548FF;
+                    font-size: 16px;
+                    // padding-left: 0;
+                    button {
+                        margin-left: -12px;
+                    }
+                }
+            }
+            :deep(.ant-checkbox-inner){
+                background: transparent;
             }
         }
 
@@ -240,7 +252,7 @@
             // height: 30px;
 
             &__title {
-            font-size: 16px;
+                font-size: 16px;
                 color: #fff;
             }
 
@@ -267,6 +279,9 @@
         }
 
         &-sign-in-way {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             .anticon {
                 font-size: 22px;
                 color: #888;
@@ -278,26 +293,6 @@
             }
         }
 
-        input:not([type='checkbox']) {
-            min-width: 200px;
-
-            @media (max-width: @screen-xl) {
-                min-width: 160px;
-            }
-
-            @media (max-width: @screen-lg) {
-                min-width: 120px;
-            }
-
-            @media (max-width: @screen-md) {
-                min-width: 100px;
-            }
-
-            @media (max-width: @screen-sm) {
-                min-width: 160px;
-            }
-        }
-
         .@{countdown-prefix-cls} input {
             min-width: unset;
         }
@@ -305,6 +300,57 @@
         .ant-divider-inner-text {
             font-size: 12px;
             color: @text-color-secondary;
+        }
+    }
+    .@{sign-prefix-cls}{
+        color: @color-gray;
+    }
+    :deep(.app-iconify){
+        color: white;
+    }
+    .dashed-span{
+        display: flex;
+        align-items: center;
+        border: 1px dashed @color-gray;
+        border-radius: 3px;
+        color: @color-gray;
+        overflow: hidden;
+        padding-right: 10px;
+        cursor: pointer;
+        transition: .2s;
+        font-size: 12px;
+
+        .dashed-span-icon{
+            background: rgba(0, 0, 0, .2);
+            transition: .2s;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            padding: 3px 5px;
+            .anticon{
+                font-size: 16px;
+            }
+        }
+
+        &:hover{
+            border-color: white;
+            color: white;
+            .dashed-span-icon{
+                color: white;
+                background: rgba(255, 255, 255, .25);
+            }
+        }
+    }
+    :deep(.btn-login) {
+        border-radius: 8px;
+    }
+
+    :deep(.verification-container){
+        min-width: 41px;
+        .verification-item{
+            &:not(:last-of-type){
+                margin-right: 10px;
+            }
         }
     }
 </style>
