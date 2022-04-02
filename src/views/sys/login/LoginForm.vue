@@ -1,6 +1,6 @@
 <template>
     <!-- <LoginFormTitle v-show="getShow" class="enter-x" /> -->
-    <div class="type-list">
+    <div class="type-list enter-x" v-show="unref(getLoginState) !== LoginStateEnum.QR_CODE">
         <span
             class="type-list-item"
             @click="setLoginState(LoginStateEnum.LOGIN)"
@@ -62,7 +62,7 @@
                     <SecurityScanOutlined />
                 </template>
                 <template #addonAfter>
-                    <span class="verification-container">
+                    <span class="verification-container" @click="setVerification">
                         <span
                             class="verification-item"
                             v-for="(ver, key) in verification"
@@ -138,6 +138,7 @@
     import { useUserStore } from '/@/store/modules/user';
     import { LoginStateEnum, useLoginState, useFormRules, useFormValid } from './useLogin';
     import { useDesign } from '/@/hooks/web/useDesign';
+    import { log } from 'console';
     //import { onKeyStroke } from '@vueuse/core';
 
     const ACol = Col;
@@ -161,7 +162,8 @@
         password: '123456',
         verification: null,
     });
-    const verification = reactive(['3', '5', 't', '2']);
+    let verification_code = ref('');
+    let verification = ref([]);
 
     const { validForm } = useFormValid(formRef);
 
@@ -169,10 +171,31 @@
 
     const getShow = computed(() => unref(getLoginState) === LoginStateEnum.LOGIN);
 
+    setVerification();
+    // 四位数验证码，有两位数字和两位大写字母组成，不包含特殊字符
+    function setVerification() {
+        let arr = [];
+        verification_code = '';
+        for (let i = 0; i < 2; i++) {
+            arr.push(Math.floor(Math.random() * 10));
+        }
+        for (let i = 0; i < 2; i++) {
+            arr.push(String.fromCharCode(Math.floor(Math.random() * (90 - 65 + 1)) + 65));
+        }
+        // 打乱顺序
+        for (let i = 0; i < arr.length; i++) {
+            const randomIndex = Math.floor(Math.random() * arr.length);
+            const temp = arr[randomIndex];
+            arr[randomIndex] = arr[i];
+            arr[i] = temp;
+        }
+        verification_code = arr.join('');
+        verification.value = [...arr];
+    }
     async function handleLogin() {
         const data = await validForm();
         if (!data) return;
-        if (data.verification != '35t2') {
+        if (data.verification.toUpperCase() != verification_code) {
             createMessage.error(t('sys.api.errorVerification'));
             return;
         }

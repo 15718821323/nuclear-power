@@ -4,7 +4,7 @@
  * @Description: 
  * @Date: 2022-04-01 11:40:25
  * @LastEditors: hebing
- * @LastEditTime: 2022-04-01 18:04:36
+ * @LastEditTime: 2022-04-02 15:48:49
  * @FilePath: /nuclear-power/src/views/sys/login/Login.vue
 -->
 <template>
@@ -28,6 +28,23 @@
         </div>
         <div :class="[`${prefixCls}-container`, { large: isLarge }]" class="enter-x">
             <div :class="`${prefixCls}-form`">
+                <!-- 扫码登录 -->
+                <div class="qr-change">
+                    <span
+                        class="qr-change-icon"
+                        v-if="unref(getLoginState) !== LoginStateEnum.QR_CODE"
+                        @click="setLoginState(LoginStateEnum.QR_CODE)"
+                    >
+                        <QrcodeOutlined />
+                    </span>
+                    <span
+                        class="qr-change-icon"
+                        v-else
+                        @click="setLoginState(LoginStateEnum.LOGIN)"
+                    >
+                        <DesktopOutlined />
+                    </span>
+                </div>
                 <div :class="`${prefixCls}-form-container`">
                     <img
                         :class="`${prefixCls}-form-title`"
@@ -38,7 +55,10 @@
                     <RegisterForm />
                     <MobileForm />
                     <QrCodeForm />
-                    <div :class="`${prefixCls}-sign-in-way`">
+                    <div
+                        :class="`${prefixCls}-sign-in-way`"
+                        v-show="unref(getLoginState) !== LoginStateEnum.QR_CODE"
+                    >
                         {{ t('sys.login.otherSignIn') }}
                         <span class="dashed-span">
                             <span class="dashed-span-icon">
@@ -59,10 +79,15 @@
     </div>
 </template>
 <script lang="ts" setup>
-    import { computed, ref } from 'vue';
+    import { computed, ref, unref } from 'vue';
     import { useRouter } from 'vue-router';
     import { Switch } from 'ant-design-vue';
-    import { WechatFilled, DingdingOutlined } from '@ant-design/icons-vue';
+    import {
+        WechatFilled,
+        DingdingOutlined,
+        DesktopOutlined,
+        QrcodeOutlined,
+    } from '@ant-design/icons-vue';
     import { AppLogo } from '/@/components/Application';
     import { AppLocalePicker, AppDarkModeToggle } from '/@/components/Application';
     import LoginForm from './LoginForm.vue';
@@ -75,6 +100,8 @@
     import { useDesign } from '/@/hooks/web/useDesign';
     import { useLocaleStore } from '/@/store/modules/locale';
     import { log } from 'console';
+    import { LoginStateEnum, useLoginState } from './useLogin';
+    const { setLoginState, getLoginState } = useLoginState();
 
     defineProps({
         sessionTimeout: {
@@ -88,10 +115,9 @@
     const localeStore = useLocaleStore();
     const showLocale = localeStore.getShowPicker;
     const title = computed(() => globSetting?.title ?? '');
-    // console.log(useRouter.currentRoute.value.path);
 
     // 控制登录卡片大小
-    const isLarge = ref<boolean>(true);
+    const isLarge = ref<boolean>(false);
 </script>
 <style lang="less" scoped>
     @prefix-cls: ~'@{namespace}-login';
@@ -181,19 +207,68 @@
                 border-radius: 14px;
                 overflow: hidden;
                 transition: all .3s;
+                position: relative;
                 &-container {
                     width: 480px;
                     padding: 60px;
                     backdrop-filter: blur(23px);
-                    :deep(.ant-form){
-                        min-height: 325px;
-                    }
+                    min-height: 590px;
+                    // :deep(.ant-form){
+                    //     min-height: 325px;
+                    // }
                 }
                 &-title{
                     width: 300px;
                     height: auto;
                     display: block;
                     margin-bottom: 30px;
+                }
+                @icon-qr-size: 76px;
+                @change-duration: .2s;
+                .qr-change{
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    width: @icon-qr-size;
+                    height: @icon-qr-size;
+                    cursor: pointer;
+                    transition: all @change-duration;
+                    overflow: hidden;
+                    &:hover,
+                    &:active{
+                        .qr-change-icon{
+                            background: rgba(0,16,56,0.9);
+                            top: 35%;
+                            left: 65%;
+                            .anticon{
+                                opacity: 1;
+                                bottom: -7%;
+                            }
+                        }
+                    }
+                    .qr-change-icon{
+                        width: 200%;
+                        height: 100%;
+                        display: block;
+                        position: absolute;
+                        top: 15%;
+                        left: 85%;
+                        font-size: 60px;
+                        color: #2e5dd3;
+                        background: rgba(0,16,56,0.75);
+                        transform: translate(-50%, -50%) rotate(45deg);
+                        overflow: hidden;
+                        transition: all @change-duration;
+
+                        .anticon{
+                            position: absolute;
+                            bottom: -35%;
+                            left: 50%;
+                            transform: translateX(-50%) rotate(-45deg);
+                            opacity: .5;
+                            transition: all @change-duration;
+                        }
+                    }
                 }
             }
 
@@ -208,7 +283,7 @@
             }
             :deep(.ant-input-clear-icon),
             :deep(.ant-input-password-icon){
-                color: #575B9B4D;
+                color: rgba(87, 91, 155, .3);
                 font-size: 14px;
                 transition: .2s;
                 &:hover{
@@ -238,6 +313,8 @@
                     // padding-left: 0;
                     button {
                         margin-left: -12px;
+                        border-top-left-radius: 0;
+                        border-bottom-left-radius: 0;
                     }
                 }
             }
@@ -341,12 +418,14 @@
             }
         }
     }
-    :deep(.btn-login) {
+    :deep(.ant-btn) {
         border-radius: 8px;
     }
 
     :deep(.verification-container){
+        display: block;
         min-width: 41px;
+        height: 100%;
         .verification-item{
             &:not(:last-of-type){
                 margin-right: 10px;
