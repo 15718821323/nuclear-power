@@ -137,7 +137,7 @@
         // align-items: center;
 
         background-color: #2e5dd3;
-        background-image: url(@/assets/images/login/bg.jpg);
+        background-image: url(../../../assets/images/login/bg.jpg);
         background-position: 50%;
         background-size: cover;
         background-repeat: no-repeat;
@@ -204,6 +204,7 @@
                 justify-content: center;
                 align-items: center;
                 background: rgba(0,16,56,0.75);
+                backdrop-filter: blur(23px);
                 border-radius: 14px;
                 overflow: hidden;
                 transition: all .3s;
@@ -211,11 +212,13 @@
                 &-container {
                     width: 480px;
                     padding: 60px;
-                    backdrop-filter: blur(23px);
                     min-height: 590px;
-                    // :deep(.ant-form){
-                    //     min-height: 325px;
-                    // }
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    :deep(.ant-form){
+                        min-height: 313px;
+                    }
                 }
                 &-title{
                     width: 300px;
@@ -238,11 +241,11 @@
                     &:active{
                         .qr-change-icon{
                             background: rgba(0,16,56,0.9);
-                            top: 35%;
-                            left: 65%;
+                            // top: 35%;
+                            // left: 65%;
                             .anticon{
                                 opacity: 1;
-                                bottom: -7%;
+                            //     bottom: -7%;
                             }
                         }
                     }
@@ -356,6 +359,7 @@
         }
 
         &-sign-in-way {
+            width: 100%;
             display: flex;
             justify-content: space-between;
             align-items: center;

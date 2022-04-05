@@ -55,6 +55,7 @@ export const useAppStore = defineStore({
       return this.getProjectConfig.headerSetting;
     },
     getMenuSetting(): MenuSetting {
+        console.log('%c [ this.getProjectConfig.menuSetting ]-59', 'font-size:13px; background:pink; color:#bf2c9f;', this.getProjectConfig.menuSetting);
       return this.getProjectConfig.menuSetting;
     },
     getTransitionSetting(): TransitionSetting {
