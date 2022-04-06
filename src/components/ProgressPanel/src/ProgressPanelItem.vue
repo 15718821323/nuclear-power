@@ -86,7 +86,9 @@
         bottom: 0;
         left: 0;
         width: 100%;
+        height: 0;
         background: linear-gradient(180deg, #0052a9, #004ea2 100%);
+        transition: all .2s;
         z-index: 1;
 
         display: flex;

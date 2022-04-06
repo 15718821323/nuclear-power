@@ -22,7 +22,7 @@
                             <ProgressPanel :list="list1"> </ProgressPanel>
                         </ACol>
                         <ACol :span="12">
-                            <NewsList :list="newsList" />
+                            <NewsList :list="newsList" @handleMore="handleMore" @handleClickItem="handleNewsItemClick"/>
                         </ACol>
                     </ARow>
                 </ACol>
@@ -43,8 +43,8 @@
     import { PageWrapper } from '/@/components/Page';
     import { Carousel } from '/@/components/Carousel';
 
-    import ProgressPanel from './components/ProgressPanel.vue';
-    import NewsList from './components/NewsList.vue';
+    import { ProgressPanel } from '/@/components/ProgressPanel';
+    import { NewsList } from '/@/components/NewsList';
 
     const loading = ref(true);
 
@@ -125,6 +125,7 @@
             type: '公告',
             title: '中核工程“华龙一号”研发团队获“中国质量奖”',
             time: '2022-04-01',
+            top: true,
         },
         {
             type: '新闻',
@@ -137,6 +138,17 @@
             time: '2022-04-03',
         },
     ]);
+
+    // *********************** ↓↓ 新闻 ↓↓ *********************** //
+    // 更多
+    function handleMore() {
+        console.log('查看更多');
+    }
+    // 新闻项点击事件
+    function handleNewsItemClick(item) {
+        console.log('新闻项点击事件',item);
+    }
+    // *********************** ↑↑ 新闻 ↑↑ *********************** //
     setTimeout(() => {
         loading.value = false;
     }, 1500);

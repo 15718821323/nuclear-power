@@ -8,7 +8,7 @@
  * @FilePath: /nuclear-power/src/components/Carousel/index.ts
  */
 import { withInstall } from '/@/utils';
-import carousel from './src/myCarousel.vue';
+import carousel from './src/Carousel.vue';
 import type { ExtractPropTypes } from 'vue';
 import { carouselProps } from './src/props';
 
