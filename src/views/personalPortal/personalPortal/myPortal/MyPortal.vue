@@ -12,7 +12,7 @@
         <div class="my-portal">
             <ARow :gutter="gutter" class="entry-x">
                 <ACol :span="16">
-                    <Carousel>
+                    <Carousel class="banner">
                         <div class="banner-item" v-for="(banner, key) in bannerList" :key="key">
                             <img :src="banner.src" alt="" />
                         </div>
@@ -22,7 +22,16 @@
                             <ProgressPanel :list="list1"> </ProgressPanel>
                         </ACol>
                         <ACol :span="12">
-                            <NewsList :list="newsList" @handleMore="handleMore" @handleClickItem="handleNewsItemClick"/>
+                            <NewsList
+                                :list="newsList"
+                                @handleMore="handleMore"
+                                @handleClickItem="handleNewsItemClick"
+                            />
+                        </ACol>
+                    </ARow>
+                    <ARow :gutter="gutter" class="entry-x">
+                        <ACol :span="24">
+                            <CardCarousel :list="cardList"> </CardCarousel>
                         </ACol>
                     </ARow>
                 </ACol>
@@ -45,6 +54,7 @@
 
     import { ProgressPanel } from '/@/components/ProgressPanel';
     import { NewsList } from '/@/components/NewsList';
+    import { CardCarousel } from '/@/components/CardCarousel';
 
     const loading = ref(true);
 
@@ -139,6 +149,122 @@
         },
     ]);
 
+    const cardList = ref([
+        {
+            title: '1号核电站升级改造',
+            time: '2020-04-01',
+            percent: 82,
+            leader: 'KA',
+            performer: ['张三', '李四', '王五'],
+            footBtns: [
+                {
+                    text: '拒绝',
+                    props: {
+                        type: 'primary',
+                        ghost: true,
+                    },
+                    onClick: () => {
+                        console.log('拒绝');
+                    },
+                },
+                {
+                    text: '同意',
+                    props: {
+                        type: 'primary',
+                    },
+                    onclick: () => {
+                        console.log('同意');
+                    },
+                },
+            ],
+            handlerDetail: () => {
+                console.log('查看详情');
+            },
+        },
+        {
+            title: '2号核电站升级改造',
+            time: '2020-04-01',
+            percent: 82,
+            leader: 'KA',
+            performer: ['张三', '李四', '王五', '赵六', '钱七', '孙八', '周九'],
+            footBtns: [
+                {
+                    text: '查看详情',
+                    props: {
+                        type: 'primary',
+                    },
+                    onClick: () => {
+                        console.log('查看详情');
+                    },
+                },
+            ],
+            handlerDetail: () => {
+                console.log('查看详情');
+            },
+        },
+        {
+            title: '3号核电站升级改造',
+            time: '2020-04-01',
+            percent: 8,
+            leader: 'KA',
+            performer: ['张三', '李四'],
+            footBtns: [
+                {
+                    text: '拒绝',
+                    props: {
+                        type: 'primary',
+                        ghost: true,
+                    },
+                    onClick: () => {
+                        console.log('拒绝');
+                    },
+                },
+                {
+                    text: '同意',
+                    props: {
+                        type: 'primary',
+                    },
+                    onclick: () => {
+                        console.log('同意');
+                    },
+                },
+            ],
+            handlerDetail: () => {
+                console.log('查看详情');
+            },
+        },
+        {
+            title: '4号核电站升级改造',
+            time: '2020-04-01',
+            percent: 8,
+            leader: 'KA',
+            performer: ['张三', '李四', '王五', '赵六'],
+            footBtns: [
+                {
+                    text: '拒绝',
+                    props: {
+                        type: 'primary',
+                        ghost: true,
+                    },
+                    onClick: () => {
+                        console.log('拒绝');
+                    },
+                },
+                {
+                    text: '同意',
+                    props: {
+                        type: 'primary',
+                    },
+                    onclick: () => {
+                        console.log('同意');
+                    },
+                },
+            ],
+            handlerDetail: () => {
+                console.log('查看详情');
+            },
+        },
+    ]);
     // *********************** ↓↓ 新闻 ↓↓ *********************** //
     // 更多
     function handleMore() {
@@ -146,7 +272,7 @@
     }
     // 新闻项点击事件
     function handleNewsItemClick(item) {
-        console.log('新闻项点击事件',item);
+        console.log('新闻项点击事件', item);
     }
     // *********************** ↑↑ 新闻 ↑↑ *********************** //
     setTimeout(() => {
@@ -162,8 +288,10 @@
         margin: 10px;
     }
 
-    :deep(.slick-list) {
-        border-radius: 14px;
-        overflow: hidden;
+    .banner {
+        :deep(.slick-list) {
+            border-radius: 14px;
+            overflow: hidden;
+        }
     }
 </style>
