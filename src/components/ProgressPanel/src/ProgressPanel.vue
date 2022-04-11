@@ -4,8 +4,8 @@
  * @Description: 进度面板
  * @Date: 2022-04-06 14:39:47
  * @LastEditors: hebing
- * @LastEditTime: 2022-04-06 17:22:09
- * @FilePath: /nuclear-power/src/views/personalPortal/personalPortal/myPortal/components/ProgressPanel.vue
+ * @LastEditTime: 2022-04-08 22:33:43
+ * @FilePath: /nuclear-power/src/components/ProgressPanel/src/ProgressPanel.vue
 -->
 <template>
     <div class="progress-panel">
@@ -50,7 +50,8 @@
             overflow: hidden;
         }
         &-item {
-            width: 100px;
+            min-width: 90px;
+            max-width: 100px;
             height: 170px;
             background: #2a3456;
             border-radius: 24px;

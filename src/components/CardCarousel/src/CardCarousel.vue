@@ -7,7 +7,9 @@
                         <div class="card-item-header">
                             <div class="card-item-header-title">
                                 <div class="title">{{ item.title }}</div>
-                                <div class="more" @click="handlerMore"> 详情 <MoreOutlined /> </div>
+                                <div class="more" @click="handlerDetail(item)">
+                                    详情 <MoreOutlined />
+                                </div>
                             </div>
                             <div class="card-item-header-time">{{ item.time }}</div>
                         </div>
@@ -20,7 +22,7 @@
                                     <span class="title">下达人</span>
                                 </div>
                                 <div class="task-performer">
-                                    <div class="avatar-group">
+                                    <div class="avatar-group" :style="{ width: widthCpt(item) }">
                                         <span
                                             class="avatar"
                                             v-for="(performer, pIndex) in performerCpt(item)"
@@ -35,29 +37,47 @@
                                     </span>
                                 </div>
                             </div>
+                            <div class="task-progress">
+                                <Progress
+                                    :percent="item.percent"
+                                    status="active"
+                                    strokeColor="#5a8bff"
+                                    :strokeWidth="4"
+                                />
+                            </div>
                         </div>
                         <div class="card-item-footer">
                             <template v-for="(btn, bkey) in item.footBtns" :key="bkey">
                                 <Button
                                     v-bind="Object.assign({ size: 'small' }, btn.props)"
-                                    @click="btn.onClick"
-                                    >{{ btn.text }}</Button
+                                    @click="
+                                        () => {
+                                            btn.onClick && btn.onClick(item);
+                                        }
+                                    "
                                 >
+                                    {{ btn.text }}
+                                </Button>
                             </template>
                         </div>
                     </div>
                 </div>
             </div>
         </Carousel>
+        <div class="right-container">
+            <div class="right-content" @click="handlerMore">
+                <div class="more"> 查看更多 <RightCircleOutlined /> </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script lang="ts" setup>
-    import { MoreOutlined } from '@ant-design/icons-vue';
+    import { MoreOutlined, RightCircleOutlined } from '@ant-design/icons-vue';
+    import { Progress } from 'ant-design-vue';
     import { defineComponent, computed, unref } from 'vue';
     import { Button } from '/@/components/Button';
     import { Carousel } from '/@/components/Carousel';
-    import { useAttrs } from '/@/hooks/core/useAttrs';
 
     const props = defineProps({
         list: {
@@ -65,6 +85,8 @@
             default: () => [],
         },
     });
+
+    const emit = defineEmits(['onMore']);
 
     const cardGroups = computed(() => {
         const list = unref(props.list);
@@ -98,30 +120,103 @@
             return [];
         };
     });
+    // 处理宽度
+    const widthCpt = computed(() => {
+        return (item) => {
+            const performer = unref(item.performer);
+            if (performer) {
+                if (performer.length > 5) {
+                    return '120px';
+                }
+                return `${(performer.length + 1) * 20}px`;
+            }
+            return '0px';
+        };
+    });
 
     // 详情按钮点击事件
+    const handlerDetail = (item) => {
+        console.log('详情');
+        item.handlerDetail && item.handlerDetail();
+    };
     const handlerMore = () => {
-        console.log('handlerMore');
+        console.log('查看更多');
+        emit('onMore');
     };
 </script>
 
 <style lang="less" scoped>
+    @right-width: 50px;
+    @border-radius: 10px;
     .card-carousel {
+        position: relative;
+        padding-right: @right-width + 10px;
+
+        :deep(.carousel-slick-arrow) {
+            color: @primary-color;
+            opacity: 0.4;
+            transition: all 0.2s;
+            &:hover,
+            &:focus {
+                opacity: 0.8;
+            }
+        }
+
+        .right-container {
+            width: @right-width;
+            height: 100%;
+            background: transparent;
+            position: absolute;
+            top: 0;
+            right: 0;
+            .right-content {
+                width: 100%;
+                height: 100%;
+                border-radius: @border-radius;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                overflow: hidden;
+                cursor: pointer;
+                background: white;
+                .more {
+                    width: 1em;
+                    font-size: 14px;
+                    color: #424e66;
+                    transition: all 0.2s;
+                }
+                &:hover,
+                &:focus {
+                    .more {
+                        color: @primary-color;
+                    }
+                }
+            }
+        }
         .card-group {
             display: inline-flex !important;
-
+            width: 100%;
+            justify-content: space-between;
             .card-item {
-                width: 300px;
-                padding: 0 10px;
+                width: 32%;
+                &:first-of-type {
+                    padding-left: 0;
+                }
+                &:last-of-type {
+                    padding-right: 0;
+                }
                 .card-item-inner {
-                    background: #ffffff;
-                    border-radius: 12px;
+                    width: 100%;
+                    background: #fff;
+                    border-radius: @border-radius;
                     overflow: hidden;
                     padding: 20px;
                 }
                 &-header {
+                    width: 100%;
                     &-title {
                         display: flex;
+                        width: 100%;
                         justify-content: space-between;
                         align-items: center;
                         margin-bottom: 8px;
@@ -133,7 +228,10 @@
                             font-weight: 700;
                             text-align: left;
                             color: #333;
-                            line-height: 18px;
+                            line-height: 1;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
                         }
                         .more {
                             width: @more-width;
@@ -171,7 +269,7 @@
                             .avatar-group {
                                 display: flex;
                                 justify-content: center;
-                                margin-bottom: -5px;
+                                margin-bottom: -3px;
                             }
                             .avatar {
                                 display: inline-flex;
@@ -211,8 +309,28 @@
                         }
                         .task-performer {
                             &-item {
-                                margin-left: -5px;
+                                margin-left: -3px;
                             }
+                        }
+                    }
+
+                    .task-progress {
+                        width: 100%;
+                        margin-bottom: 2em;
+                        :deep(.ant-progress-show-info) {
+                            padding-top: 1em;
+                            .ant-progress-outer {
+                                margin-right: 0;
+                                padding-right: 0;
+                            }
+                        }
+                        :deep(.ant-progress-text) {
+                            margin-left: 0;
+                            position: absolute;
+                            top: 0.5em;
+                            right: 0;
+                            color: #9e9e9e;
+                            font-size: 12px;
                         }
                     }
                 }
@@ -222,15 +340,20 @@
                         &:not(:last-of-type) {
                             margin-right: 10px;
                         }
-                        &.ant-btn-primary:not(.ant-btn-background-ghost) {
-                            background: rgba(24, 135, 255, 0.24);
-                            border-color: #004ea2;
-                            color: #004ea2;
+                        padding: 0 15px;
+                        &.ant-btn-primary {
+                            &:not(.ant-btn-background-ghost) {
+                                color: #004ea2;
+                                background: rgba(24, 135, 255, 0.24);
+                                border: 1px solid #004ea2;
+                                border-radius: 6px;
+                                font-size: 12px;
 
-                            &:hover,
-                            &:focus {
-                                background: #004ea2;
-                                color: white;
+                                &:hover,
+                                &:focus {
+                                    background: #004ea2;
+                                    color: white;
+                                }
                             }
                         }
                     }
