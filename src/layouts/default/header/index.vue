@@ -41,12 +41,11 @@
                 :class="`${prefixCls}-action__item error-action`"
             />
 
+            <SystemPlatform :class="`${prefixCls}-action__item`" :menuList="menuList" />
+
             <Notify v-if="getShowNotice" :class="`${prefixCls}-action__item notify-item`" />
 
-            <FullScreen
-                v-if="getShowFullScreen"
-                :class="`${prefixCls}-action__item fullscreen-item`"
-            />
+            <AppDarkModeToggle :class="`${prefixCls}-action__item`" />
 
             <AppLocalePicker
                 v-if="getShowLocalePicker"
@@ -55,14 +54,19 @@
                 :class="`${prefixCls}-action__item`"
             />
 
-            <UserDropDown :theme="getHeaderTheme" />
+            <FullScreen
+                v-if="getShowFullScreen"
+                :class="`${prefixCls}-action__item fullscreen-item`"
+            />
 
             <SettingDrawer v-if="getShowSetting" :class="`${prefixCls}-action__item`" />
+
+            <UserDropDown :theme="getHeaderTheme" />
         </div>
     </Header>
 </template>
 <script lang="ts">
-    import { defineComponent, unref, computed } from 'vue';
+    import { defineComponent, unref, computed, ref } from 'vue';
 
     import { propTypes } from '/@/utils/propTypes';
 
@@ -81,13 +85,22 @@
     import { SettingButtonPositionEnum } from '/@/enums/appEnum';
     import { AppLocalePicker } from '/@/components/Application';
 
-    import { UserDropDown, LayoutBreadcrumb, FullScreen, Notify, ErrorAction } from './components';
+    import {
+        UserDropDown,
+        LayoutBreadcrumb,
+        FullScreen,
+        Notify,
+        ErrorAction,
+        SystemPlatform,
+    } from './components';
     import { useAppInject } from '/@/hooks/web/useAppInject';
     import { useDesign } from '/@/hooks/web/useDesign';
 
     import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent';
     import { useLocale } from '/@/locales/useLocale';
     import { log } from 'console';
+
+    import { AppDarkModeToggle } from '/@/components/Application';
 
     export default defineComponent({
         name: 'LayoutHeader',
@@ -103,6 +116,8 @@
             Notify,
             AppSearch,
             ErrorAction,
+            AppDarkModeToggle,
+            SystemPlatform,
             SettingDrawer: createAsyncComponent(
                 () => import('/@/layouts/default/setting/index.vue'),
                 {
@@ -152,6 +167,80 @@
                     },
                 ];
             });
+
+            // 系统平台抽屉数据
+            const menuList = ref([
+                {
+                    title: '新闻平台',
+                    img: '/@/assets/images/systemPlatForm/news.png',
+                    onClick: () => {
+                        console.log('新闻平台');
+                    },
+                },
+                {
+                    title: '采购平台',
+                    img: '/@/assets/images/systemPlatForm/purchase.png',
+                    onClick: () => {
+                        console.log('采购平台');
+                    },
+                },
+                {
+                    title: '数据管理',
+                    img: '/@/assets/images/systemPlatForm/data.png',
+                    onClick: () => {
+                        console.log('数据管理');
+                    },
+                },
+                {
+                    title: '防护平台',
+                    img: '/@/assets/images/systemPlatForm/protect.png',
+                    onClick: () => {
+                        console.log('防护平台');
+                    },
+                },
+                {
+                    title: '审批平台',
+                    img: '/@/assets/images/systemPlatForm/approve.png',
+                    onClick: () => {
+                        console.log('审批平台');
+                    },
+                },
+                {
+                    title: '下载平台',
+                    img: '/@/assets/images/systemPlatForm/download.png',
+                    onClick: () => {
+                        console.log('下载平台');
+                    },
+                },
+                {
+                    title: '管理平台',
+                    img: '/@/assets/images/systemPlatForm/manage.png',
+                    onClick: () => {
+                        console.log('管理平台');
+                    },
+                },
+                {
+                    title: '防护平台2',
+                    img: '/@/assets/images/systemPlatForm/protect2.png',
+                    onClick: () => {
+                        console.log('防护平台2');
+                    },
+                },
+                {
+                    title: '书籍平台',
+                    img: '/@/assets/images/systemPlatForm/book.png',
+                    onClick: () => {
+                        console.log('书籍平台');
+                    },
+                },
+                {
+                    title: '系统平台',
+                    img: '/@/assets/images/systemPlatForm/sys.png',
+                    onClick: () => {
+                        console.log('系统平台');
+                    },
+                },
+            ]);
 
             const getShowSetting = computed(() => {
                 if (!unref(getShowSettingButton)) {
@@ -203,6 +292,7 @@
                 getShowSettingButton,
                 getShowSetting,
                 getShowSearch,
+                menuList,
             };
         },
     });

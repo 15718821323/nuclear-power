@@ -6,7 +6,8 @@ export function createFakeUserList() {
         {
             userId: '1',
             username: 'admin',
-            realName: '超级管理员',
+            realName: '赵飞翔',
+            position: '核电设计师',
             avatar: 'https://q1.qlogo.cn/g?b=qq&nk=190848757&s=640',
             desc: 'manager',
             password: '123456',

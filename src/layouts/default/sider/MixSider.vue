@@ -137,12 +137,12 @@
                 getIsMixSidebar,
                 getCollapsed,
             } = useMenuSetting();
-
             console.log(
-                '%c [ getMenuTheme ]-141',
+                '%c [ getMenuTheme ]-132',
                 'font-size:13px; background:pink; color:#bf2c9f;',
                 getMenuTheme,
             );
+
             const { title } = useGlobSetting();
             const permissionStore = usePermissionStore();
 
@@ -373,7 +373,8 @@
             height: @header-height;
             padding-left: 0 !important;
             justify-content: center;
-            background-color: #f1f5ff;
+            // background-color: #f1f5ff;
+            background-color: transparent;
 
             img {
                 width: @logo-width;
@@ -384,7 +385,7 @@
         &.light {
             .@{prefix-cls}-logo {
                 border-bottom: 1px solid rgb(238 238 238);
-                background-color: #f1f5ff !important;
+                // background-color: #f1f5ff;
             }
 
             &.open {
@@ -425,7 +426,7 @@
         &.dark {
             .@{prefix-cls}-logo {
                 // border-bottom: 1px solid @border-color;
-                background-color: #141414;
+                // background-color: #141414;
             }
             &.open {
                 > .scrollbar {
@@ -478,8 +479,10 @@
                 // &:hover,
                 &--active {
                     font-weight: 700;
-                    color: @white;
-                    background-color: @sider-dark-darken-bg-color;
+                    // color: @white;
+                    // background-color: @sider-dark-darken-bg-color;
+                    color: '#004ea2';
+                    background-color: white;
 
                     &::before {
                         position: absolute;
