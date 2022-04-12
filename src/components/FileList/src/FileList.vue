@@ -4,7 +4,7 @@
  * @Description: 文件列表
  * @Date: 2022-04-09 20:35:20
  * @LastEditors: hebing
- * @LastEditTime: 2022-04-10 10:51:25
+ * @LastEditTime: 2022-04-13 01:11:59
  * @FilePath: /nuclear-power/src/components/FileList/src/FileList.vue
 -->
 <template>
@@ -198,6 +198,27 @@
                     transition: all 0.3s;
                     text-align: center;
                 }
+            }
+        }
+    }
+    [data-theme='dark'] {
+        .file-list {
+            background: #0d0d0d;
+            :deep(.ant-popover-inner) {
+                &:after {
+                    background: rgba(0, 0, 0, 0.9);
+                }
+            }
+        }
+        .file-list-header-title {
+            color: #e4e4e4;
+        }
+        .file-list-body {
+            .file-item-body-header .header-title {
+                color: #e4e4e4;
+            }
+            .file-item-icon {
+                background: #333;
             }
         }
     }

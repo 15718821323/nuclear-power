@@ -4,7 +4,7 @@
  * @Description: 快捷菜单
  * @Date: 2022-04-08 22:55:41
  * @LastEditors: hebing
- * @LastEditTime: 2022-04-09 21:22:35
+ * @LastEditTime: 2022-04-13 00:54:45
  * @FilePath: /nuclear-power/src/components/ShortcutMenu/src/ShortcutMenu.vue
 -->
 <template>
@@ -121,6 +121,17 @@
                     text-align: center;
                 }
             }
+        }
+    }
+    [data-theme='dark'] {
+        .shortcut-menu {
+            background: #0d0d0d;
+        }
+        .shortcut-menu-header-title {
+            color: #e4e4e4;
+        }
+        .shortcut-menu-body .menu-item:hover .menu-item-title {
+            color: #e4e4e4;
         }
     }
 </style>

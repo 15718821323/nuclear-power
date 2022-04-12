@@ -4,7 +4,7 @@
  * @Description: 年度完成情况
  * @Date: 2022-04-09 23:00:46
  * @LastEditors: hebing
- * @LastEditTime: 2022-04-10 11:41:01
+ * @LastEditTime: 2022-04-13 01:14:27
  * @FilePath: /nuclear-power/src/components/AnnualCompletion/src/AnnualCompletion.vue
 -->
 <template>
@@ -107,6 +107,22 @@
             .line-chart {
                 width: calc(~'100% - @{pie-width}');
                 height: 100%;
+            }
+        }
+    }
+    [data-theme='dark'] {
+        .annual-completion {
+            background: #0d0d0d;
+        }
+        .annual-completion-header-title {
+            color: #e4e4e4;
+        }
+        .file-list-body {
+            .file-item-body-header .header-title {
+                color: #e4e4e4;
+            }
+            .file-item-icon {
+                background: #333;
             }
         }
     }

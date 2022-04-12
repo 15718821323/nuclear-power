@@ -361,4 +361,19 @@
             }
         }
     }
+    [data-theme='dark'] {
+        .card-carousel {
+            .card-group {
+                .card-item .card-item-inner {
+                    background: #0d0d0d;
+                }
+                .card-item-header-title .title {
+                    color: #e4e4e4;
+                }
+            }
+            .right-container .right-content {
+                background: #0d0d0d;
+            }
+        }
+    }
 </style>

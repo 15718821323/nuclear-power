@@ -37,7 +37,7 @@ export const HEADER_PRESET_BG_COLOR_LIST: string[] = [
 export const SIDE_BAR_BG_COLOR_LIST: string[] = [
     // '#001529',
     '#f1f5ff',
-    '#212121',
+    '#141414',
     '#273352',
     '#ffffff',
     '#191b24',

@@ -4,8 +4,8 @@
  * @Description: 新闻列表
  * @Date: 2022-04-06 17:37:01
  * @LastEditors: hebing
- * @LastEditTime: 2022-04-06 17:56:24
- * @FilePath: /nuclear-power/src/views/personalPortal/personalPortal/myPortal/components/newsList.vue
+ * @LastEditTime: 2022-04-13 00:30:46
+ * @FilePath: /nuclear-power/src/components/NewsList/src/NewsList.vue
 -->
 <template>
     <div class="news-list">
@@ -19,8 +19,14 @@
             </a-button>
         </div>
         <div class="news-list-body">
-            <div class="news-list-item" v-for="(item, key) in list" :class="{'top': item.top}" :key="key" @click="handleClickNews(item)">
-                <div class="news-list-item-content"> 
+            <div
+                class="news-list-item"
+                v-for="(item, key) in list"
+                :class="{ top: item.top }"
+                :key="key"
+                @click="handleClickNews(item)"
+            >
+                <div class="news-list-item-content">
                     <span class="type">[{{ item.type }}]</span>
                     {{ item.title }}
                 </div>
@@ -92,9 +98,9 @@
         &-body {
             overflow: hidden;
             width: 100%;
-            height: calc(~"38px * 3");
+            height: calc(~'38px * 3');
         }
-        &-item{
+        &-item {
             width: 100%;
             display: flex;
             justify-content: space-between;
@@ -105,14 +111,14 @@
 
             @time-width: 6em;
             @icon-width: 20px;
-            &.top{
+            &.top {
                 padding-left: @icon-width + 2px;
-                &::before{
+                &::before {
                     content: '顶';
                     display: block;
                     width: @icon-width;
                     text-align: center;
-                    background: rgba(26,66,186,0.25);
+                    background: rgba(26, 66, 186, 0.25);
                     border-radius: 2px;
                     font-size: 12px;
                     color: #2a5fff;
@@ -124,22 +130,37 @@
             }
             &-content {
                 display: block;
-                width: calc(~"100% - @{time-width}");
-                white-space:nowrap;
-                overflow:hidden;
-                text-overflow:ellipsis;
+                width: calc(~'100% - @{time-width}');
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
                 color: #333;
 
-                .type{
+                .type {
                     color: #333;
                     font-weight: 600;
                 }
             }
-            &-time{
+            &-time {
                 display: block;
                 width: @time-width;
                 color: #4d4d4d;
                 text-align: right;
+            }
+        }
+    }
+
+    [data-theme='dark'] {
+        .news-list {
+            background: #0d0d0d;
+            .news-list-item-content {
+                &,
+                & .type {
+                    color: #e4e4e4;
+                }
+            }
+            &-item-time {
+                color: #818181;
             }
         }
     }

@@ -4,7 +4,7 @@
  * @Description: 日历组件
  * @Date: 2022-04-10 12:14:16
  * @LastEditors: hebing
- * @LastEditTime: 2022-04-11 00:30:41
+ * @LastEditTime: 2022-04-13 00:58:00
  * @FilePath: /nuclear-power/src/components/TaskCalendar/src/TaskCalendar.vue
 -->
 <template>
@@ -443,6 +443,23 @@
             .ant-radio-group {
                 display: none;
             }
+        }
+    }
+
+    [data-theme='dark'] {
+        .task-calendar {
+            background: #0d0d0d;
+            :deep(.ant-popover-inner) {
+                &:after {
+                    background: rgba(0, 0, 0, 0.9);
+                }
+            }
+        }
+        .task-calendar-header-title {
+            color: #e4e4e4;
+        }
+        .shortcut-menu-body .menu-item:hover .menu-item-title {
+            color: #e4e4e4;
         }
     }
 </style>
