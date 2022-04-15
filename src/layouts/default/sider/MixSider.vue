@@ -53,9 +53,7 @@
                     },
                 ]"
             >
-                <span class="text">
-                    <!-- {{ title }} -->
-                </span>
+                <span class="text"> {{ title }}</span>
                 <Icon
                     :size="16"
                     :icon="getMixSideFixed ? 'ri:pushpin-2-fill' : 'ri:pushpin-2-line'"
@@ -68,7 +66,7 @@
                     :items="childrenMenus"
                     :theme="getMenuTheme"
                     mixSider
-                    @menuClick="handleMenuClick"
+                    @menu-click="handleMenuClick"
                 />
             </ScrollContainer>
             <div
@@ -100,7 +98,6 @@
     import { getChildrenMenus, getCurrentParentPath, getShallowMenus } from '/@/router/menus';
     import { listenerRouteChange } from '/@/logics/mitt/routeChange';
     import LayoutTrigger from '../trigger/index.vue';
-
     export default defineComponent({
         name: 'LayoutMixSider',
         components: {
@@ -122,7 +119,6 @@
             const dragBarRef = ref<ElRef>(null);
             const sideRef = ref<ElRef>(null);
             const currentRoute = ref<Nullable<RouteLocationNormalized>>(null);
-
             const { prefixCls } = useDesign('layout-mix-sider');
             const go = useGo();
             const { t } = useI18n();
@@ -139,24 +135,16 @@
                 getIsMixSidebar,
                 getCollapsed,
             } = useMenuSetting();
-            console.log(
-                '%c [ getMenuTheme ]-132',
-                'font-size:13px; background:pink; color:#bf2c9f;',
-                getMenuTheme,
-            );
-
             const { title } = useGlobSetting();
             const permissionStore = usePermissionStore();
-
             useDragLine(sideRef, dragBarRef, true);
-
             const getMenuStyle = computed((): CSSProperties => {
                 return {
                     width: unref(openMenu) ? `${unref(getMenuWidth)}px` : 0,
                     left: `${unref(getMixSideWidth)}px`,
+                    borderTopRightRadius: '12px',
                 };
             });
-
             const getIsFixed = computed(() => {
                 /* eslint-disable-next-line */
                 mixSideHasChildren.value = unref(childrenMenus).length > 0;
@@ -167,22 +155,18 @@
                 }
                 return isFixed;
             });
-
             const getMixSideWidth = computed(() => {
                 return unref(getCollapsed) ? SIDE_BAR_MINI_WIDTH : SIDE_BAR_SHOW_TIT_MINI_WIDTH;
             });
-
             const getDomStyle = computed((): CSSProperties => {
                 const fixedWidth = unref(getIsFixed) ? unref(getRealWidth) : 0;
                 const width = `${unref(getMixSideWidth) + fixedWidth}px`;
                 return getWrapCommonStyle(width);
             });
-
             const getWrapStyle = computed((): CSSProperties => {
                 const width = `${unref(getMixSideWidth)}px`;
                 return getWrapCommonStyle(width);
             });
-
             const getMenuEvents = computed(() => {
                 return !unref(getMixSideFixed)
                     ? {
@@ -193,13 +177,10 @@
                       }
                     : {};
             });
-
             const getShowDragBar = computed(() => unref(getCanDrag));
-
             onMounted(async () => {
                 menuModules.value = await getShallowMenus();
             });
-
             // Menu changes
             watch(
                 [() => permissionStore.getLastBuildMenuTime, () => permissionStore.getBackMenuList],
@@ -210,7 +191,6 @@
                     immediate: true,
                 },
             );
-
             listenerRouteChange((route) => {
                 currentRoute.value = route;
                 setActive(true);
@@ -218,7 +198,6 @@
                     closeMenu();
                 }
             });
-
             function getWrapCommonStyle(width: string): CSSProperties {
                 return {
                     width,
@@ -227,7 +206,6 @@
                     flex: `0 0 ${width}`,
                 };
             }
-
             // Process module menu click
             async function handleModuleClick(path: string, hover = false) {
                 const children = await getChildrenMenus(path);
@@ -250,7 +228,6 @@
                     openMenu.value = true;
                     activePath.value = path;
                 }
-
                 if (!children || children.length === 0) {
                     if (!hover) go(path);
                     childrenMenus.value = [];
@@ -259,7 +236,6 @@
                 }
                 childrenMenus.value = children;
             }
-
             // Set the currently active menu and submenu
             async function setActive(setChildren = false) {
                 const path = currentRoute.value?.path;
@@ -275,7 +251,6 @@
                         const children = await getChildrenMenus(p);
                         if (setChildren) {
                             childrenMenus.value = children;
-
                             if (unref(getMixSideFixed)) {
                                 openMenu.value = children.length > 0;
                             }
@@ -286,16 +261,13 @@
                     }
                 }
             }
-
             function handleMenuClick(path: string) {
                 go(path);
             }
-
             function handleClickOutside() {
                 setActive(true);
                 closeMenu();
             }
-
             function getItemEvents(item: Menu) {
                 if (unref(getMixSideTrigger) === 'hover') {
                     return {
@@ -310,20 +282,17 @@
                     onClick: () => handleModuleClick(item.path),
                 };
             }
-
             function handleFixedMenu() {
                 setMenuSetting({
                     mixSideFixed: !unref(getIsFixed),
                 });
             }
-
             // Close menu
             function closeMenu() {
                 if (!unref(getIsFixed)) {
                     openMenu.value = false;
                 }
             }
-
             return {
                 t,
                 prefixCls,
@@ -353,7 +322,7 @@
 </script>
 <style lang="less">
     @prefix-cls: ~'@{namespace}-layout-mix-sider';
-    @width: 160px;
+    @width: 80px;
     .@{prefix-cls} {
         position: fixed;
         top: 0;
@@ -363,48 +332,34 @@
         overflow: hidden;
         background-color: @sider-dark-bg-color;
         transition: all 0.2s ease 0s;
-
         &-dom {
             height: 100%;
             overflow: hidden;
             transition: all 0.2s ease 0s;
         }
-
         &-logo {
             display: flex;
             height: @header-height;
             padding-left: 0 !important;
             justify-content: center;
-            // background-color: #f1f5ff;
-            background-color: transparent;
-
             img {
                 width: @logo-width;
                 height: @logo-width;
             }
         }
-
-        // &-menu-list{
-
-        // }
-
         &.light {
             .@{prefix-cls}-logo {
                 border-bottom: 1px solid rgb(238 238 238);
-                // background-color: #f1f5ff;
             }
-
-            // &.open {
-            //     > .scrollbar {
-            //         border-right: 1px solid rgb(238 238 238);
-            //     }
-            // }
-
+            &.open {
+                > .scrollbar {
+                    border-right: 1px solid rgb(238 238 238);
+                }
+            }
             .@{prefix-cls}-module {
                 &__item {
                     font-weight: normal;
                     color: rgb(0 0 0 / 65%);
-
                     &--active {
                         color: @primary-color;
                         background-color: unset;
@@ -415,95 +370,86 @@
                 &__content {
                     box-shadow: 0 0 4px 0 rgb(0 0 0 / 10%);
                 }
-
                 &__title {
                     .pushpin {
-                        color: #999;
-
+                        color: rgb(0 0 0 / 35%);
                         &:hover {
-                            color: #666;
+                            color: rgb(0 0 0 / 85%);
                         }
                     }
                 }
             }
         }
         @border-color: @sider-dark-lighten-bg-color;
-
         &.dark {
-            .@{prefix-cls}-logo {
-                // border-bottom: 1px solid @border-color;
-                // background-color: #141414;
+            &.open {
+                .@{prefix-cls}-logo {
+                    // border-bottom: 1px solid @border-color;
+                }
+                > .scrollbar {
+                    border-right: 1px solid @border-color;
+                }
             }
-            // &.open {
-            //     > .scrollbar {
-            //         border-right: 1px solid @border-color;
-            //     }
-            // }
             .@{prefix-cls}-menu-list {
                 background-color: @sider-dark-bg-color;
-
                 &__title {
-                    color: #999;
+                    color: @white;
                     border-bottom: none;
-                    // border-bottom: 1px solid @border-color;
+                    border-bottom: 1px solid @border-color;
                 }
             }
         }
-
         > .scrollbar {
             height: calc(100% - @header-height - 38px);
         }
-
         &.mini &-module {
             &__name {
                 display: none;
             }
-
             &__icon {
                 margin-bottom: 0;
             }
         }
-
         &-module {
             position: relative;
             padding-top: 1px;
-
             &__item {
                 position: relative;
-                padding: 12px 15px;
-                font-weight: 400;
-                color: rgba(75, 75, 75, 0.9);
+                padding: 12px 0;
+                color: rgb(255 255 255 / 65%);
                 text-align: center;
                 cursor: pointer;
                 transition: all 0.3s ease;
-                display: flex;
-                // justify-content: space-between;
-                align-items: center;
-
                 &:hover {
-                    color: #004ea2;
+                    color: @white;
                 }
+                // &:hover,
                 &--active {
                     font-weight: 700;
-                    color: #004ea2;
-                    background-color: white;
+                    color: @white;
+                    background-color: @sider-dark-darken-bg-color;
+                    &::before {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 3px;
+                        height: 100%;
+                        background-color: @primary-color;
+                        content: '';
+                    }
                 }
             }
-
             &__icon {
-                // margin-bottom: 8px;
+                margin-bottom: 8px;
                 font-size: 24px;
                 transition: all 0.2s;
-                margin-right: 6px;
             }
-
             &__name {
                 margin-bottom: 0;
                 font-size: 12px;
                 transition: all 0.2s;
             }
         }
-
         &-trigger {
             position: absolute;
             bottom: 0;
@@ -517,13 +463,11 @@
             height: 36px;
             line-height: 36px;
         }
-
         &.light &-trigger {
             color: rgb(0 0 0 / 65%);
             background-color: #fff;
             border-top: 1px solid #eee;
         }
-
         &-menu-list {
             position: fixed;
             top: 0;
@@ -531,7 +475,6 @@
             height: calc(100%);
             background-color: #fff;
             transition: all 0.2s;
-
             &__title {
                 display: flex;
                 height: @header-height;
@@ -543,41 +486,32 @@
                 transition: unset;
                 align-items: center;
                 justify-content: space-between;
-
                 &.show {
                     min-width: 130px;
                     opacity: 100%;
                     transition: all 0.5s ease;
                 }
-
                 .pushpin {
                     margin-right: 6px;
-                    color: #999;
+                    color: rgb(255 255 255 / 65%);
                     cursor: pointer;
-
                     &:hover {
-                        color: #666;
+                        color: #fff;
                     }
                 }
             }
-
             &__content {
                 height: calc(100% - @header-height) !important;
-                background: white;
-
                 .scrollbar__wrap {
                     height: 100%;
                     overflow-x: hidden;
                 }
-
                 .scrollbar__bar.is-horizontal {
                     display: none;
                 }
-
                 .ant-menu {
                     height: 100%;
                 }
-
                 .ant-menu-inline,
                 .ant-menu-vertical,
                 .ant-menu-vertical-left {
@@ -585,7 +519,6 @@
                 }
             }
         }
-
         &-drag-bar {
             position: absolute;
             top: 50px;
@@ -597,38 +530,6 @@
             border-top: none;
             border-bottom: none;
             box-shadow: 0 0 4px 0 rgb(28 36 56 / 15%);
-        }
-    }
-    [data-theme='dark'] {
-        .@{prefix-cls}{
-            &-module {
-                &__item {
-                    color: #808080;
-
-                    &:hover {
-                        color: #005bed;
-                    }
-                    &--active {
-                        color: #005bed;
-                        background-color: #0d0d0d;
-                    }
-                }
-            }
-            &-menu-list__content{
-                background: #0d0d0d;
-            }
-            .vben-menu-vertical .vben-menu-child-item-active > .vben-menu-submenu-title {
-                color: #005BEE;
-            }
-            .vben-menu-dark.vben-menu-vertical .vben-menu-item-active:not(.vben-menu-submenu) {
-                color: #005BED !important;
-                background-color: rgba(24,24,24,0.92) !important;
-
-                &:hover{
-                    color: #2574f4;
-                    background-color: rgb(33, 33, 33) !important;
-                }
-            }
         }
     }
 </style>
