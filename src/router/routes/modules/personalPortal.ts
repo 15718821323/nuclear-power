@@ -4,7 +4,7 @@
  * @Description: 个人用户路由
  * @Date: 2022-04-02 14:13:18
  * @LastEditors: hebing
- * @LastEditTime: 2022-04-02 16:58:36
+ * @LastEditTime: 2022-04-17 00:12:00
  * @FilePath: /nuclear-power/src/router/routes/modules/personalPortal.ts
  */
 import type { AppRouteModule } from '/@/router/types';
@@ -38,7 +38,17 @@ const dashboard: AppRouteModule = {
                     component: () =>
                         import('/@/views/personalPortal/personalPortal/myPortal/MyPortal.vue'),
                     meta: {
-                        affix: true,
+                        // affix: true,
+                        title: t('routes.personalPortal.myPortal'),
+                    },
+                },
+                {
+                    path: 'myPortal2',
+                    name: 'MyPortal2',
+                    component: () =>
+                        import('/@/views/personalPortal/personalPortal/myPortal/MyPortal2.vue'),
+                    meta: {
+                        // affix: true,
                         title: t('routes.personalPortal.myPortal'),
                     },
                 },

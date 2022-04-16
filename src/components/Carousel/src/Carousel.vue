@@ -1,7 +1,7 @@
 <template>
     <Carousel v-bind="getBindValue">
         <template #prevArrow>
-            <div class="carousel-slick-arrow" style="left: 10px; z-index: 1">
+            <div class="carousel-slick-arrow" style="left: 20px; z-index: 1">
                 <LeftCircleFilled />
             </div>
         </template>
@@ -9,7 +9,7 @@
             <slot v-bind="data || {}"></slot>
         </template>
         <template #nextArrow>
-            <div class="carousel-slick-arrow" style="right: 10px">
+            <div class="carousel-slick-arrow" style="right: 20px">
                 <RightCircleFilled />
             </div>
         </template>
@@ -28,14 +28,16 @@
 </script>
 <style lang="less" scoped>
     :deep(.carousel-slick-arrow) {
-        font-size: 20px;
-        color: rgba(255, 255, 255, 0.8);
+        font-size: 40px;
+        width: auto;
+        height: auto;
+        color: rgba(255, 255, 255, 0.8) !important;
         &::after,
         &::before {
             content: '';
         }
         &:hover {
-            color: rgba(255, 255, 255, 1);
+            color: rgba(255, 255, 255, 1) !important;
         }
     }
 </style>

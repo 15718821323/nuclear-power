@@ -14,10 +14,7 @@
                 <TabPane :closable="!(item && item.meta && item.meta.affix)">
                     <template #tab>
                         <TabContent :tabItem="item" />
-                        <TabRedo
-                            v-if="!(item && item.meta && item.meta.affix)"
-                            :style="{ border: 0 }"
-                        />
+                        <TabRedo :style="{ border: 0 }" />
                     </template>
                 </TabPane>
             </template>

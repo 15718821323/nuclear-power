@@ -4,41 +4,41 @@
  * @Description: 新闻列表
  * @Date: 2022-04-06 17:37:01
  * @LastEditors: hebing
- * @LastEditTime: 2022-04-13 00:30:46
+ * @LastEditTime: 2022-04-15 22:19:25
  * @FilePath: /nuclear-power/src/components/NewsList/src/NewsList.vue
 -->
 <template>
     <div class="news-list">
-        <div class="news-list-header">
-            <span class="news-list-title">
-                <span>新闻</span>
-                <span>公告</span>
-            </span>
-            <a-button :postIcon="'ant-design:more-outlined'" type="link" @click="toMore">
-                更多
-            </a-button>
-        </div>
-        <div class="news-list-body">
-            <div
-                class="news-list-item"
-                v-for="(item, key) in list"
-                :class="{ top: item.top }"
-                :key="key"
-                @click="handleClickNews(item)"
-            >
-                <div class="news-list-item-content">
-                    <span class="type">[{{ item.type }}]</span>
-                    {{ item.title }}
+        <SimpleCard :onMore="toMore">
+            <template v-slot:title>
+                <span class="news-list-title">
+                    <span>新闻</span>
+                    <span>公告</span>
+                </span>
+            </template>
+            <div class="news-list-body">
+                <div
+                    class="news-list-item"
+                    v-for="(item, key) in list"
+                    :class="{ top: item.top }"
+                    :key="key"
+                    @click="handleClickNews(item)"
+                >
+                    <div class="news-list-item-content">
+                        <span class="type">[{{ item.type }}]</span>
+                        {{ item.title }}
+                    </div>
+                    <div class="news-list-item-time"> {{ item.time }}</div>
                 </div>
-                <div class="news-list-item-time"> {{ item.time }}</div>
             </div>
-        </div>
+        </SimpleCard>
     </div>
 </template>
 
 <script lang="ts" setup>
     import { defineProps } from 'vue';
     import { MoreOutlined } from '@ant-design/icons-vue';
+    import { SimpleCard } from '/@/components/SimpleCard';
 
     const props = defineProps({
         list: {
@@ -60,27 +60,18 @@
 </script>
 <style lang="less" scoped>
     .news-list {
-        background: #ffffff;
-        border-radius: 12px;
-        backdrop-filter: blur(4px);
-        padding: 10px 15px;
-        &-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-        }
         &-title {
             display: inline-flex;
-            line-height: 24px;
+            line-height: 26px;
             overflow: hidden;
+
             @border-radius: 24px;
             span {
                 display: block;
                 height: 100%;
-                padding: 0 15px;
-                font-size: 16px;
-                font-weight: 600;
+                padding: 0 10px;
+                font-size: 18px;
+                font-weight: 500;
                 border: 1px solid @primary-color;
                 &:first-of-type {
                     background: @primary-color;
@@ -108,6 +99,7 @@
             padding: 8px 0;
             cursor: pointer;
             position: relative;
+            font-size: 14px;
 
             @time-width: 6em;
             @icon-width: 20px;
@@ -152,7 +144,6 @@
 
     [data-theme='dark'] {
         .news-list {
-            background: #0d0d0d;
             .news-list-item-content {
                 &,
                 & .type {

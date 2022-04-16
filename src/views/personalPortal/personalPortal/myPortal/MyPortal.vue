@@ -4,7 +4,7 @@
  * @Description: 我的门户
  * @Date: 2022-04-02 14:28:54
  * @LastEditors: hebing
- * @LastEditTime: 2022-04-11 00:23:13
+ * @LastEditTime: 2022-04-15 22:55:31
  * @FilePath: /nuclear-power/src/views/personalPortal/personalPortal/myPortal/MyPortal.vue
 -->
 <template>
@@ -13,9 +13,13 @@
             <ARow :gutter="gutter" class="entry-x">
                 <ACol :span="16">
                     <Carousel class="banner" :loading="loading">
-                        <div class="banner-item" v-for="(banner, key) in bannerList" :key="key">
-                            <img :src="banner.src" alt="" />
-                        </div>
+                        <img
+                            class="banner-item"
+                            :src="banner.src"
+                            alt=""
+                            v-for="(banner, key) in bannerList"
+                            :key="key"
+                        />
                     </Carousel>
                     <ARow :gutter="gutter" class="entry-x my-4">
                         <ACol :span="12">
@@ -92,10 +96,10 @@
     const gutter = ref(16);
     const bannerList = ref([
         {
-            src: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01f2d159506b1fa8012193a31140bb.jpg&refer=http%3A%2F%2Fimg.zcool.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1651805331&t=ffca483e99de02720c9132b341ba8564',
+            src: '/@/assets/images/myPortal/banner1.png',
         },
         {
-            src: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01427358c639fca801219c77b2c564.jpg&refer=http%3A%2F%2Fimg.zcool.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1651805373&t=a9b50726db250c9c8a7da9063f184049',
+            src: '/@/assets/images/myPortal/banner2.png',
         },
     ]);
     const list1 = ref([

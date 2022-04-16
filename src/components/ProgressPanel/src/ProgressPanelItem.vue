@@ -63,6 +63,7 @@
         position: relative;
         z-index: 2;
         margin-left: 5px;
+        margin-bottom: 8px;
     }
     .title {
         color: white;
@@ -87,12 +88,28 @@
         left: 0;
         width: 100%;
         height: 0;
-        background: linear-gradient(180deg, #0052a9, #004ea2 100%);
-        transition: all .2s;
+        background-image: -webkit-linear-gradient(180deg, #0053d4, #1c3bd9 100%, #4003eb 100%);
+        background-image: linear-gradient(180deg, #0053d4, #1c3bd9 100%, #4003eb 100%);
+
+        transition: all 0.2s;
         z-index: 1;
 
         display: flex;
         justify-content: center;
+        overflow: hidden;
+
+        &::after {
+            content: ' ';
+            position: absolute;
+            display: block;
+            width: 100px;
+            height: 100px;
+            bottom: 0;
+            right: 0;
+            background-image: url(/@/assets/images/progress-bg.png);
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }
     }
     .label {
         position: absolute;

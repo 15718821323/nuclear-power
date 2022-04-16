@@ -4,7 +4,7 @@
         <SvgIcon size="14" name="sun" />
         <SvgIcon size="14" name="moon" /> -->
         <Icon icon="mdi:white-balance-sunny" v-if="isDark" />
-        <Icon icon="ic:round-nights-stay" v-else :style="{ color: '#333' }" />
+        <Icon icon="ic:round-nights-stay" v-else />
     </div>
 </template>
 <script lang="ts" setup>

@@ -4,20 +4,85 @@
  * @Description: 日历组件
  * @Date: 2022-04-10 12:14:16
  * @LastEditors: hebing
- * @LastEditTime: 2022-04-13 00:58:00
+ * @LastEditTime: 2022-04-17 00:29:59
  * @FilePath: /nuclear-power/src/components/TaskCalendar/src/TaskCalendar.vue
 -->
 <template>
     <div class="task-calendar" id="taskCalendar">
-        <div class="task-calendar-container">
-            <div class="task-calendar-header">
-                <div class="task-calendar-header-title"> <ContainerFilled /> 任务日历 </div>
-                <div class="task-calendar-header-more" @click="handlerMore">
-                    更多 <MoreOutlined />
-                </div>
-            </div>
+        <SimpleCard :onMore="handlerMore" title="任务日历" icon="ant-design:container-filled">
             <div class="task-calendar-body">
-                <Calendar v-model:value="nowTime" @panelChange="panelChange">
+                <Calendar :value="nowTime" @panelChange="panelChange">
+                    <template #headerRender="{ value, onChange }">
+                        <div class="calendar-header">
+                            <div class="date-select">
+                                <Select
+                                    size="small"
+                                    :dropdown-match-select-width="false"
+                                    class="my-year-select"
+                                    :value="String(value.year())"
+                                    @change="
+                                        (newYear) => {
+                                            onChange(value.clone().year(newYear));
+                                        }
+                                    "
+                                >
+                                    <SelectOption
+                                        v-for="val in getYears(value)"
+                                        :key="String(val)"
+                                        class="year-item"
+                                    >
+                                        {{ val }}
+                                    </SelectOption>
+                                </Select>
+                                <Select
+                                    size="small"
+                                    :dropdown-match-select-width="false"
+                                    :value="String(value.month())"
+                                    @change="
+                                        (selectedMonth) => {
+                                            onChange(
+                                                value.clone().month(parseInt(selectedMonth, 10)),
+                                            );
+                                        }
+                                    "
+                                >
+                                    <SelectOption
+                                        v-for="(val, index) in getMonths(value)"
+                                        :key="String(index)"
+                                        class="month-item"
+                                    >
+                                        {{ val }}
+                                    </SelectOption>
+                                </Select>
+                            </div>
+                            <div class="change-month">
+                                <Button
+                                    type="primary"
+                                    size="small"
+                                    shape="circle"
+                                    @click="
+                                        () => {
+                                            onChange(value.clone().subtract(1, 'month'));
+                                        }
+                                    "
+                                >
+                                    <Icon icon="ant-design:left-outlined" />
+                                </Button>
+                                <Button
+                                    type="primary"
+                                    size="small"
+                                    shape="circle"
+                                    @click="
+                                        () => {
+                                            onChange(value.clone().add(1, 'month'));
+                                        }
+                                    "
+                                >
+                                    <Icon icon="ant-design:right-outlined" />
+                                </Button>
+                            </div>
+                        </div>
+                    </template>
                     <template #dateCellRender="{ current }">
                         <Popover
                             trigger="click"
@@ -85,23 +150,26 @@
                     </template>
                 </Calendar>
             </div>
-        </div>
+        </SimpleCard>
     </div>
 </template>
 
 <script lang="ts" setup>
     import {
-        ContainerFilled,
         MoreOutlined,
         EyeFilled,
         CheckCircleFilled,
         ClockCircleFilled,
+        LeftOutlined,
+        RightOutlined,
     } from '@ant-design/icons-vue';
-    import { defineComponent, computed, unref, ref, watch, onMounted, reactive } from 'vue';
-    import { Calendar, Badge, Popover, Button } from 'ant-design-vue';
-    // import { Dayjs } from 'dayjs';
-    import moment from 'moment';
+    import { computed, unref, ref, watch, onMounted, reactive } from 'vue';
+    import { Calendar, Badge, Popover, Button, Select, SelectOption } from 'ant-design-vue';
+    // import moment from 'moment';
+    import moment, { Moment } from 'moment';
     import { log } from 'console';
+    import { SimpleCard } from '/@/components/SimpleCard';
+    import Icon from '/@/components/Icon';
 
     const props = defineProps({
         loading: Boolean,
@@ -126,9 +194,9 @@
         },
     });
 
-    // let taskDays = ref([]);
+    // const nowTime = ref<Moment>(moment());
+    const nowTime = ref<Moment>(moment());
 
-    const nowTime = ref<Dayjs>(moment());
     // 激活日期的任务详情
     const activeTask = reactive({
         title: '',
@@ -144,7 +212,8 @@
         emit('onMore');
     }
     // 日期面板变化回调
-    function panelChange(date, mode) {
+    function panelChange(date: Moment, mode) {
+        nowTime.value = date;
         setTask(date);
     }
 
@@ -157,7 +226,7 @@
 
     // 渲染tag颜色
     const tagCpt = computed(() => {
-        return (date: Dayjs) => {
+        return (date: Moment) => {
             let color;
             const time = date.format('YYYY-MM-DD');
             const dayData = [...props.taskDays];
@@ -174,14 +243,14 @@
     });
     // 渲染tag文字
     const dateCpt = computed(() => {
-        return (date: Dayjs) => {
+        return (date: Moment) => {
             const day = date.date().toString();
             return day.length > 1 ? day : '0' + day;
         };
     });
 
     // 点击标记 查询任务详情
-    function queryTaskDetail(date: Dayjs) {
+    function queryTaskDetail(date: Moment) {
         const time = date.format('YYYY-MM-DD');
         activeTask.title = date.format('YYYY年MM月DD日');
         activeTask.content = [];
@@ -215,56 +284,44 @@
     });
 
     // 任务列表 更多
-    function handlerTaskMore(date: Dayjs) {
-        console.log('%c [ date ]-223', 'font-size:13px; background:pink; color:#bf2c9f;', date);
+    function handlerTaskMore(date: Moment) {
         emit('onTaskMore', date.format('YYYY-MM-DD'));
     }
 
     function getPopupContainer() {
         return document.querySelector('#taskCalendar');
     }
+
+    const getMonths = (value: Moment) => {
+        const current = value.clone();
+        const localeData = value.localeData();
+        const months = [];
+        for (let i = 0; i < 12; i++) {
+            current.month(i);
+            months.push(localeData.monthsShort(current));
+        }
+        return months;
+    };
+
+    const getYears = (value: Moment) => {
+        const year = value.year();
+        const years = [];
+        for (let i = year - 10; i < year + 10; i += 1) {
+            years.push(i);
+        }
+        return years;
+    };
 </script>
 
 <style lang="less" scoped>
     .task-calendar {
-        height: calc(~'100% - 182px');
-        border-radius: 12px;
-        backdrop-filter: blur(4px);
-        background: white;
-        padding: 15px;
-        &-container {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-        &-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            &-title {
-                font-size: 20px;
-                font-family: PangMenZhengDao, PangMenZhengDao-Regular;
-                font-weight: 400;
-                color: #1a1a1a;
-                line-height: 1;
-                letter-spacing: 0.1px;
-            }
-            &-more {
-                font-size: 14px;
-                color: #999;
-                line-height: 1;
-                transition: all 0.2s;
-                cursor: pointer;
-                &:hover,
-                &:focus {
-                    color: @primary-color;
-                }
-            }
-        }
+        height: calc(~'100% - 191px');
         &-body {
-            height: calc(~'100% - 22px');
+            height: 100%;
             display: flex;
             align-items: center;
+            justify-content: center;
+            flex-direction: column;
         }
 
         :deep(.ant-fullcalendar-fullscreen) {
@@ -284,12 +341,25 @@
                     left: 50%;
                     transform: translate(-50%, -50%);
                     z-index: 1;
+                    background: transparent !important;
 
                     width: 100%;
                     height: 100%;
                     display: inline-flex;
                     justify-content: center;
                     align-items: center;
+                }
+            }
+            .ant-fullcalendar-header {
+                padding: 11px 16px;
+
+                .ant-select-selector {
+                    border: 0 !important;
+                    box-shadow: none !important;
+                }
+                .ant-select.ant-fullcalendar-month-select,
+                .ant-select.ant-fullcalendar-year-select {
+                    min-width: auto;
                 }
             }
             .ant-fullcalendar-content {
@@ -299,8 +369,10 @@
                 transform: translate(-50%, -50%);
                 z-index: 2;
 
-                width: 70%;
-                height: 70%;
+                width: 50%;
+                height: 50%;
+                min-width: 30px;
+                min-height: 30px;
                 overflow: hidden;
                 transition: all 0.2s;
                 .tag {
@@ -314,6 +386,24 @@
                     color: white;
                     border: none !important;
                     transition: all 0.2s;
+                }
+            }
+        }
+        .calendar-header {
+            margin-bottom: 10px;
+            padding: 0 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .date-select {
+                :deep(.ant-select-selector) {
+                    border: 0 !important;
+                    box-shadow: none !important;
+                }
+            }
+            .change-month {
+                :deep(.ant-btn) {
+                    margin-left: 10px;
                 }
             }
         }
@@ -447,14 +537,13 @@
     }
 
     [data-theme='dark'] {
-        .task-calendar {
-            background: #0d0d0d;
-            :deep(.ant-popover-inner) {
-                &:after {
-                    background: rgba(0, 0, 0, 0.9);
-                }
-            }
-        }
+        // .task-calendar {
+        //     :deep(.ant-popover-inner) {
+        //         &:after {
+        //             background: rgba(0, 0, 0, 0.9);
+        //         }
+        //     }
+        // }
         .task-calendar-header-title {
             color: #e4e4e4;
         }

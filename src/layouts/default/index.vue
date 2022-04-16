@@ -78,7 +78,10 @@
         }
         &-main {
             width: 100%;
-            margin-left: 1px;
+            // margin-left: 1px;
         }
+    }
+    [data-theme='dark'] .@{prefix-cls}-main {
+        background: #040404;
     }
 </style>

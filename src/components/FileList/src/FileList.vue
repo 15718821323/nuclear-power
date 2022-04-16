@@ -4,18 +4,12 @@
  * @Description: 文件列表
  * @Date: 2022-04-09 20:35:20
  * @LastEditors: hebing
- * @LastEditTime: 2022-04-13 01:11:59
+ * @LastEditTime: 2022-04-16 20:38:16
  * @FilePath: /nuclear-power/src/components/FileList/src/FileList.vue
 -->
 <template>
     <div class="file-list">
-        <div class="file-list-container">
-            <div class="file-list-header">
-                <div class="file-list-header-title"> <FileAddFilled /> 文档资料 </div>
-                <div class="file-list-header-more" @click="handlerMore">
-                    更多 <MoreOutlined />
-                </div>
-            </div>
+        <SimpleCard :onMore="handlerMore" title="文档资料" icon="ant-design:file-add-filled">
             <div class="file-list-body">
                 <div
                     class="file-item"
@@ -41,13 +35,14 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </SimpleCard>
     </div>
 </template>
 
 <script lang="ts" setup>
     import { FileAddFilled, MoreOutlined } from '@ant-design/icons-vue';
     import { defineComponent, computed, unref } from 'vue';
+    import { SimpleCard } from '/@/components/SimpleCard';
 
     const props = defineProps({
         fileList: {
@@ -89,42 +84,10 @@
 <style lang="less" scoped>
     .file-list {
         height: 100%;
-        border-radius: 12px;
-        backdrop-filter: blur(4px);
-        background: white;
-        padding: 15px;
-        &-container {
-            position: relative;
-            width: 100%;
-        }
-        &-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            &-title {
-                font-size: 20px;
-                font-family: PangMenZhengDao, PangMenZhengDao-Regular;
-                font-weight: 400;
-                color: #1a1a1a;
-                line-height: 1;
-                letter-spacing: 0.1px;
-            }
-            &-more {
-                font-size: 14px;
-                color: #999;
-                line-height: 1;
-                transition: all 0.2s;
-                cursor: pointer;
-                &:hover,
-                &:focus {
-                    color: @primary-color;
-                }
-            }
-        }
         &-body {
+            width: 100%;
             // display: flex;
             // justify-content: space-around;
-            padding-top: 15px;
 
             .file-item {
                 display: flex;
@@ -202,22 +165,14 @@
         }
     }
     [data-theme='dark'] {
-        .file-list {
-            background: #0d0d0d;
-            :deep(.ant-popover-inner) {
-                &:after {
-                    background: rgba(0, 0, 0, 0.9);
-                }
-            }
-        }
-        .file-list-header-title {
-            color: #e4e4e4;
-        }
         .file-list-body {
-            .file-item-body-header .header-title {
+            :deep(.file-item-body-header .header-title) {
                 color: #e4e4e4;
             }
-            .file-item-icon {
+            :deep(.file-item-body-content) {
+                color: #a6a6a6;
+            }
+            :deep(.file-item-icon) {
                 background: #333;
             }
         }

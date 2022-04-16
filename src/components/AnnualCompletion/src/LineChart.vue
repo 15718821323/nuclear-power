@@ -4,8 +4,8 @@
  * @Description: 折线图
  * @Date: 2022-04-10 00:53:49
  * @LastEditors: hebing
- * @LastEditTime: 2022-04-10 12:23:12
- * @FilePath: /nuclear-power/src/components/AnnualCompletion/src/lineChart.vue
+ * @LastEditTime: 2022-04-16 21:14:01
+ * @FilePath: /nuclear-power/src/components/AnnualCompletion/src/LineChart.vue
 -->
 <template>
     <div ref="chartRef" :style="{ height, width }"></div>
@@ -95,6 +95,14 @@
             legend: {
                 data: [...data.legend],
                 bottom: '0',
+                itemWidth: 8,
+                itemHeight: 8,
+                itemStyle: {
+                    borderWidth: 0,
+                    borderRadius: 5,
+                    borderColor: 'rgba(255,255,255,0.5)',
+                    opacity: 0.5,
+                },
             },
             tooltip: {
                 trigger: 'axis',
@@ -122,14 +130,20 @@
                     '11月',
                     '12月',
                 ],
-                splitLine: {
+                axisLine: {
                     show: true,
-                    lineStyle: {
-                        width: 1,
-                        type: 'solid',
-                        color: 'rgba(226,226,226,0.5)',
-                    },
+                    symbol: ['none', 'arrow'],
+                    symbolSize: [8, 10],
+                    symbolOffset: [0, 5],
                 },
+                // splitLine: {
+                //     show: false,
+                // lineStyle: {
+                //     width: 1,
+                //     type: 'solid',
+                //     color: 'rgba(226,226,226,0.5)',
+                // },
+                // },
                 axisTick: {
                     show: false,
                 },
@@ -142,11 +156,19 @@
                     axisTick: {
                         show: false,
                     },
-                    splitArea: {
+                    splitLine: {
                         show: true,
-                        areaStyle: {
-                            color: ['rgba(255,255,255,0.2)', 'rgba(226,226,226,0.2)'],
+                        lineStyle: {
+                            width: 1,
+                            type: 'dashed',
+                            color: '#c5b5bf',
                         },
+                    },
+                    axisLine: {
+                        show: true,
+                        symbol: ['none', 'arrow'],
+                        symbolSize: [8, 10],
+                        symbolOffset: [0, 5],
                     },
                 },
             ],

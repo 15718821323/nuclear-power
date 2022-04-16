@@ -4,7 +4,7 @@
  * @Description: 饼状图
  * @Date: 2022-04-10 00:21:45
  * @LastEditors: hebing
- * @LastEditTime: 2022-04-10 10:51:47
+ * @LastEditTime: 2022-04-17 00:05:54
  * @FilePath: /nuclear-power/src/components/AnnualCompletion/src/PieChart.vue
 -->
 <template>
@@ -50,8 +50,15 @@
                     trigger: 'item',
                 },
                 legend: {
-                    bottom: '1%',
-                    left: 'center',
+                    bottom: '0',
+                    itemWidth: 8,
+                    itemHeight: 8,
+                    itemStyle: {
+                        borderWidth: 0,
+                        borderRadius: 5,
+                        borderColor: 'rgba(255,255,255,0.5)',
+                        opacity: 0.5,
+                    },
                 },
                 series: [
                     {
@@ -60,11 +67,11 @@
                         type: 'pie',
                         radius: ['40%', '70%'],
                         avoidLabelOverlap: false,
-                        itemStyle: {
-                            borderRadius: 5,
-                            borderColor: '#fff',
-                            borderWidth: 2,
-                        },
+                        // itemStyle: {
+                        //     borderRadius: 3,
+                        //     borderColor: 'transparent',
+                        //     borderWidth: 2,
+                        // },
                         label: {
                             show: false,
                             position: 'center',

@@ -153,11 +153,12 @@
         padding-right: @right-width + 10px;
 
         :deep(.carousel-slick-arrow) {
-            color: @primary-color;
+            color: @primary-color !important;
             opacity: 0.4;
             transition: all 0.2s;
             &:hover,
             &:focus {
+                color: @primary-color !important;
                 opacity: 0.8;
             }
         }
@@ -248,7 +249,7 @@
                     }
                     &-time {
                         color: #4d4d4d;
-                        font-size: 12px;
+                        font-size: 14px;
                     }
                 }
                 &-body {
@@ -365,14 +366,17 @@
         .card-carousel {
             .card-group {
                 .card-item .card-item-inner {
-                    background: #0d0d0d;
+                    background: #1c1f24;
                 }
                 .card-item-header-title .title {
                     color: #e4e4e4;
                 }
             }
             .right-container .right-content {
-                background: #0d0d0d;
+                background: #1c1f24;
+                .more {
+                    color: #e4e4e4;
+                }
             }
         }
     }

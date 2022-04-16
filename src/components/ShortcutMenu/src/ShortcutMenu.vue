@@ -4,18 +4,12 @@
  * @Description: 快捷菜单
  * @Date: 2022-04-08 22:55:41
  * @LastEditors: hebing
- * @LastEditTime: 2022-04-13 00:54:45
+ * @LastEditTime: 2022-04-15 23:09:14
  * @FilePath: /nuclear-power/src/components/ShortcutMenu/src/ShortcutMenu.vue
 -->
 <template>
     <div class="shortcut-menu">
-        <div class="shortcut-menu-container">
-            <div class="shortcut-menu-header">
-                <div class="shortcut-menu-header-title"> <ThunderboltFilled /> 快捷菜单 </div>
-                <div class="shortcut-menu-header-more" @click="handlerMore">
-                    更多 <MoreOutlined />
-                </div>
-            </div>
+        <SimpleCard :onMore="handlerMore" title="快捷菜单" icon="ant-design:thunderbolt-filled">
             <div class="shortcut-menu-body">
                 <div
                     class="menu-item"
@@ -31,13 +25,12 @@
                     <span class="menu-item-title"> {{ menu.title }} </span>
                 </div>
             </div>
-        </div>
+        </SimpleCard>
     </div>
 </template>
 
 <script lang="ts" setup>
-    import { ThunderboltFilled, MoreOutlined } from '@ant-design/icons-vue';
-    import { defineComponent, computed, unref } from 'vue';
+    import { SimpleCard } from '/@/components/SimpleCard';
 
     const props = defineProps({
         menuList: {
@@ -54,42 +47,10 @@
 
 <style lang="less" scoped>
     .shortcut-menu {
-        border-radius: 12px;
-        backdrop-filter: blur(4px);
-        background: white;
-        padding: 15px;
-        &-container {
-            position: relative;
-            width: 100%;
-        }
-        &-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            &-title {
-                font-size: 20px;
-                font-family: PangMenZhengDao, PangMenZhengDao-Regular;
-                font-weight: 400;
-                color: #1a1a1a;
-                line-height: 1;
-                letter-spacing: 0.1px;
-            }
-            &-more {
-                font-size: 14px;
-                color: #999;
-                line-height: 1;
-                transition: all 0.2s;
-                cursor: pointer;
-                &:hover,
-                &:focus {
-                    color: @primary-color;
-                }
-            }
-        }
         &-body {
+            width: 100%;
             display: flex;
             justify-content: space-around;
-            padding-top: 15px;
 
             .menu-item {
                 display: flex;
@@ -109,13 +70,13 @@
                 }
                 &-icon {
                     display: block;
-                    width: 48px;
+                    width: 54px;
                     height: auto;
                     margin-bottom: 8px;
                 }
                 &-title {
                     white-space: nowrap;
-                    font-size: 12px;
+                    font-size: 14px;
                     color: #888;
                     transition: all 0.3s;
                     text-align: center;
@@ -124,12 +85,6 @@
         }
     }
     [data-theme='dark'] {
-        .shortcut-menu {
-            background: #0d0d0d;
-        }
-        .shortcut-menu-header-title {
-            color: #e4e4e4;
-        }
         .shortcut-menu-body .menu-item:hover .menu-item-title {
             color: #e4e4e4;
         }
