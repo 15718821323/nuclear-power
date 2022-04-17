@@ -154,6 +154,7 @@
 
         :deep(.carousel-slick-arrow) {
             color: @primary-color !important;
+            font-size: 32px;
             opacity: 0.4;
             transition: all 0.2s;
             &:hover,

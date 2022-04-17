@@ -229,6 +229,7 @@
     @prefix-cls: ~'@{namespace}-login';
     .type-list {
         padding: 15px 0;
+        width: 100%;
         &-item {
             min-width: 90px;
             padding: 10px 0;

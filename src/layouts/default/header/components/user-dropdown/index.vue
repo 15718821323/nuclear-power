@@ -1,5 +1,9 @@
 <template>
-    <Dropdown placement="bottomLeft" :overlayClassName="`${prefixCls}-dropdown-overlay`">
+    <Dropdown
+        placement="bottomLeft"
+        :overlayClassName="`${prefixCls}-dropdown-overlay`"
+        :trigger="['click']"
+    >
         <span :class="[prefixCls, `${prefixCls}--${theme}`]" class="flex">
             <img :class="`${prefixCls}__header`" :src="getUserInfo.avatar" />
             <span :class="`${prefixCls}__info hidden md:block`">
@@ -219,9 +223,9 @@
             padding: 0;
 
             @border-radius: 10px;
-            @filter: 12px;
+            @filter: 0;
             .ant-dropdown-menu {
-                padding: 0;
+                padding: 5px !important;
                 border-radius: @border-radius;
                 overflow: hidden;
                 background: transparent;
@@ -236,7 +240,7 @@
                     height: 100%;
                     border-radius: @border-radius;
 
-                    background: rgba(255, 255, 255, 0.9);
+                    background: rgba(255, 255, 255, 0.95);
                     -webkit-filter: blur(@filter);
                     -moz-filter: blur(@filter);
                     -ms-filter: blur(@filter);
@@ -267,13 +271,14 @@
             }
 
             .dropdown-top {
-                width: 100%;
+                width: calc(~'100% + 10px');
                 background: #004ea2;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
                 padding: 20px 0;
+                margin: -5px -5px 0;
 
                 @avatar-size: 60px;
                 &__avatar {
@@ -298,6 +303,9 @@
                     transform: scale(0.9);
                 }
             }
+        }
+        .ant-dropdown-menu {
+            padding: 4px 0 !important;
         }
     }
     [data-theme='dark'] {

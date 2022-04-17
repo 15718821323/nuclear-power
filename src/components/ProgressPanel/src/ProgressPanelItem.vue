@@ -3,7 +3,8 @@
         <Dropdown :trigger="['click']" :dropMenuList="item.dropdown" @menuEvent="handleClick">
             <MoreOutlined />
         </Dropdown>
-        <Icon :icon="item.icon" v-if="item.icon" :size="30" color="white" />
+        <!-- <Icon :icon="item.icon" v-if="item.icon" :size="30" color="white" /> -->
+        <img class="icon-img" :src="item.iconSrc" alt="" />
         <span class="title"> {{ item.title }} </span>
         <span class="bottom"> {{ labelCpt }} </span>
         <div class="progress-bg" :style="{ height: item.percent + '%' }"></div>
@@ -48,6 +49,13 @@
             .label {
                 opacity: 1;
             }
+        }
+        .icon-img {
+            width: 32px;
+            height: 32px;
+            position: relative;
+            z-index: 3;
+            margin: 5px 0 10px;
         }
     }
     :deep(.ant-dropdown-trigger) {

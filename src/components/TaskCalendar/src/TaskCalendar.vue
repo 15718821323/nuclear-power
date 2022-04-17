@@ -4,7 +4,7 @@
  * @Description: 日历组件
  * @Date: 2022-04-10 12:14:16
  * @LastEditors: hebing
- * @LastEditTime: 2022-04-17 00:29:59
+ * @LastEditTime: 2022-04-17 18:17:28
  * @FilePath: /nuclear-power/src/components/TaskCalendar/src/TaskCalendar.vue
 -->
 <template>
@@ -31,7 +31,7 @@
                                         :key="String(val)"
                                         class="year-item"
                                     >
-                                        {{ val }}
+                                        {{ val }}年
                                     </SelectOption>
                                 </Select>
                                 <Select
@@ -170,6 +170,10 @@
     import { log } from 'console';
     import { SimpleCard } from '/@/components/SimpleCard';
     import Icon from '/@/components/Icon';
+
+    moment.updateLocale('zh-cn', {
+        weekdaysMin: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+    });
 
     const props = defineProps({
         loading: Boolean,
@@ -533,6 +537,10 @@
             .ant-radio-group {
                 display: none;
             }
+        }
+
+        :deep(.ant-fullcalendar-fullscreen .ant-fullcalendar-column-header) {
+            text-align: center;
         }
     }
 

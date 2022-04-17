@@ -19,6 +19,7 @@
     useTitle();
 </script>
 <style lang="less">
+    .ant-select-dropdown,
     .ant-dropdown-menu {
         padding: 4px 5px !important;
     }

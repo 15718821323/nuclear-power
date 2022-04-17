@@ -4,7 +4,7 @@
  * @Description: 我的门户 第二种风格
  * @Date: 2022-04-17 00:10:48
  * @LastEditors: hebing
- * @LastEditTime: 2022-04-17 00:27:14
+ * @LastEditTime: 2022-04-17 20:48:00
  * @FilePath: /nuclear-power/src/views/personalPortal/personalPortal/myPortal/MyPortal2.vue
 -->
 <template>
@@ -107,7 +107,7 @@
     // ]);
     const list1 = ref([
         {
-            icon: 'akar-icons:file',
+            iconSrc: '/@/assets/images/myPortal/progressPanel/1.png',
             title: '待办事项',
             percent: '100',
             label: '12',
@@ -122,7 +122,7 @@
             ],
         },
         {
-            icon: 'ant-design:file-done-outlined',
+            iconSrc: '/@/assets/images/myPortal/progressPanel/2.png',
             title: '已办事项',
             percent: '30',
             label: '2',
@@ -137,7 +137,7 @@
             ],
         },
         {
-            icon: 'ant-design:file-add-outlined',
+            iconSrc: '/@/assets/images/myPortal/progressPanel/3.png',
             title: '委托事项',
             percent: '30',
             label: '1',
@@ -152,7 +152,7 @@
             ],
         },
         {
-            icon: 'ant-design:field-time-outlined',
+            iconSrc: '/@/assets/images/myPortal/progressPanel/4.png',
             title: '超时事项',
             percent: '80',
             label: '2',

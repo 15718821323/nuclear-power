@@ -4,24 +4,27 @@
  * @Description: 
  * @Date: 2022-04-01 11:40:25
  * @LastEditors: hebing
- * @LastEditTime: 2022-04-02 15:48:49
+ * @LastEditTime: 2022-04-17 18:08:43
  * @FilePath: /nuclear-power/src/views/sys/login/Login.vue
 -->
 <template>
     <div :class="prefixCls">
-        <AppLocalePicker
+        <!-- <AppLocalePicker
             class="absolute text-white top-4 right-4 enter-x"
             :showText="false"
             v-if="!sessionTimeout && showLocale"
             :style="{ color: 'white' }"
-        />
+        /> -->
         <!-- 演示登录卡大小切换 -->
         <span class="absolute text-white top-4 right-14 enter-x">
             切换登录卡大小：<Switch v-model:checked="isLarge" />
         </span>
 
         <div class="logo">
-            <AppLogo class="-enter-x" />
+            <!-- <AppLogo class="-enter-x" /> -->
+            <div class="logo-container -enter-x">
+                <img src="/@/assets/images/logo_long.png" alt="" srcset="" />
+            </div>
             <span class="absolute bottom-8 left-30 -enter-x" :style="{ color: '#6184FF' }"
                 >*{{ t('sys.login.unitName') }}</span
             >
@@ -177,7 +180,7 @@
                     display: none;
             }
 
-            .@{logo-prefix-cls}{
+            .logo-container{
                 width: 260px;
                 position: absolute;
                 top: 50px;

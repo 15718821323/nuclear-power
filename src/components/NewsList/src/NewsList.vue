@@ -4,7 +4,7 @@
  * @Description: 新闻列表
  * @Date: 2022-04-06 17:37:01
  * @LastEditors: hebing
- * @LastEditTime: 2022-04-15 22:19:25
+ * @LastEditTime: 2022-04-17 20:59:27
  * @FilePath: /nuclear-power/src/components/NewsList/src/NewsList.vue
 -->
 <template>
@@ -101,7 +101,7 @@
             position: relative;
             font-size: 14px;
 
-            @time-width: 6em;
+            @time-width: 7em;
             @icon-width: 20px;
             &.top {
                 padding-left: @icon-width + 2px;

@@ -81,7 +81,7 @@ export default {
 
         loginButton: '立即登录',
         registerButton: '注册',
-        rememberMe: '记住我',
+        rememberMe: '记住密码',
         forgetPassword: '忘记密码?',
         otherSignIn: '其他登录方式',
 
