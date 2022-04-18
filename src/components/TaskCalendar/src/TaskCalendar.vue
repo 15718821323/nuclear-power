@@ -4,7 +4,7 @@
  * @Description: 日历组件
  * @Date: 2022-04-10 12:14:16
  * @LastEditors: hebing
- * @LastEditTime: 2022-04-17 18:17:28
+ * @LastEditTime: 2022-04-18 22:15:49
  * @FilePath: /nuclear-power/src/components/TaskCalendar/src/TaskCalendar.vue
 -->
 <template>
@@ -15,7 +15,15 @@
                     <template #headerRender="{ value, onChange }">
                         <div class="calendar-header">
                             <div class="date-select">
-                                <Select
+                                <MonthPicker v-model:value="nowTime" :format="'YYYY年MM月'">
+                                    <!-- <template #suffixIcon>
+                                        <RightOutlined />
+                                    </template> -->
+                                    <span class="month-picker-trigger">
+                                        {{ nowTime.format('YYYY年MM月') }} <RightOutlined />
+                                    </span>
+                                </MonthPicker>
+                                <!-- <Select
                                     size="small"
                                     :dropdown-match-select-width="false"
                                     class="my-year-select"
@@ -53,7 +61,7 @@
                                     >
                                         {{ val }}
                                     </SelectOption>
-                                </Select>
+                                </Select> -->
                             </div>
                             <div class="change-month">
                                 <Button
@@ -164,15 +172,22 @@
         RightOutlined,
     } from '@ant-design/icons-vue';
     import { computed, unref, ref, watch, onMounted, reactive } from 'vue';
-    import { Calendar, Badge, Popover, Button, Select, SelectOption } from 'ant-design-vue';
-    // import moment from 'moment';
+    import {
+        Calendar,
+        Badge,
+        Popover,
+        Button,
+        Select,
+        SelectOption,
+        MonthPicker,
+    } from 'ant-design-vue';
     import moment, { Moment } from 'moment';
     import { log } from 'console';
     import { SimpleCard } from '/@/components/SimpleCard';
     import Icon from '/@/components/Icon';
 
     moment.updateLocale('zh-cn', {
-        weekdaysMin: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+        weekdaysMin: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
     });
 
     const props = defineProps({
@@ -539,8 +554,30 @@
             }
         }
 
-        :deep(.ant-fullcalendar-fullscreen .ant-fullcalendar-column-header) {
+        :deep(.ant-fullcalendar-column-header .ant-fullcalendar-column-header-inner) {
             text-align: center;
+            font-size: 14px;
+            font-weight: 700;
+        }
+    }
+
+    :deep(.month-picker-trigger) {
+        cursor: pointer;
+        font-size: 18px;
+        font-family: Poppins, Poppins-Medium;
+        font-weight: 500;
+        text-align: LEFT;
+        color: #333;
+
+        .anticon {
+            transition: all 0.2s;
+            color: @primary-color;
+            opacity: 0.7;
+        }
+        &:hover {
+            .anticon {
+                opacity: 1;
+            }
         }
     }
 

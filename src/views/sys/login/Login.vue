@@ -4,7 +4,7 @@
  * @Description: 
  * @Date: 2022-04-01 11:40:25
  * @LastEditors: hebing
- * @LastEditTime: 2022-04-17 18:08:43
+ * @LastEditTime: 2022-04-18 21:29:33
  * @FilePath: /nuclear-power/src/views/sys/login/Login.vue
 -->
 <template>
@@ -38,21 +38,24 @@
                         v-if="unref(getLoginState) !== LoginStateEnum.QR_CODE"
                         @click="setLoginState(LoginStateEnum.QR_CODE)"
                     >
-                        <QrcodeOutlined />
+                        <!-- <QrcodeOutlined /> -->
+                        <img src="/@/assets/images/login/qr1.png" alt="" />
                     </span>
                     <span
                         class="qr-change-icon"
                         v-else
                         @click="setLoginState(LoginStateEnum.LOGIN)"
                     >
-                        <DesktopOutlined />
+                        <!-- <DesktopOutlined /> -->
+                        <img src="/@/assets/images/login/qr2.png" alt="" />
                     </span>
                 </div>
                 <div :class="`${prefixCls}-form-container`">
-                    <img
+                    <!-- <img
                         :class="`${prefixCls}-form-title`"
                         src="../../../assets/images/login/title.png"
-                    />
+                    /> -->
+                    <span :class="`${prefixCls}-form-title`">中核基础技术平台</span>
                     <LoginForm />
                     <ForgetPasswordForm />
                     <RegisterForm />
@@ -200,6 +203,11 @@
                     width: 100%;
                     height: 100%;
                     border-radius: 0;
+                    .qr-change{
+                        top: 0;
+                        right: 0;
+                        border-top-right-radius: 0;
+                    }
                 }
             }
             .@{prefix-cls}-form{
@@ -221,58 +229,69 @@
                     align-items: center;
                     :deep(.ant-form){
                         min-height: 313px;
+                        width: 100%;
                     }
                 }
                 &-title{
-                    width: 300px;
+                    width: 100%;
                     height: auto;
                     display: block;
                     margin-bottom: 30px;
+                    font-size: 38px;
+                    font-family: ZhenyanGB, ZhenyanGB-Regular;
+                    font-weight: 400;
+                    text-align: center;
+                    color: #ffffff;
+                    letter-spacing: 2px;
                 }
                 @icon-qr-size: 76px;
                 @change-duration: .2s;
                 .qr-change{
                     position: absolute;
-                    top: 0;
-                    right: 0;
+                    top: 10px;
+                    right: 10px;
                     width: @icon-qr-size;
                     height: @icon-qr-size;
                     cursor: pointer;
                     transition: all @change-duration;
                     overflow: hidden;
+                    border-top-right-radius: 12px;
                     &:hover,
                     &:active{
                         .qr-change-icon{
-                            background: rgba(0,16,56,0.9);
+                            // background: rgba(0,16,56,0.9);
                             // top: 35%;
                             // left: 65%;
-                            .anticon{
+                            img{
                                 opacity: 1;
                             //     bottom: -7%;
                             }
                         }
                     }
                     .qr-change-icon{
-                        width: 200%;
-                        height: 100%;
-                        display: block;
-                        position: absolute;
-                        top: 15%;
-                        left: 85%;
-                        font-size: 60px;
-                        color: #2e5dd3;
-                        background: rgba(0,16,56,0.75);
-                        transform: translate(-50%, -50%) rotate(45deg);
+                        // width: 200%;
+                        // height: 100%;
+                        // display: block;
+                        // position: absolute;
+                        // top: 15%;
+                        // left: 85%;
+                        // font-size: 60px;
+                        // color: #2e5dd3;
+                        // background: rgba(0,16,56,0.75);
+                        // transform: translate(-50%, -50%) rotate(45deg);
                         overflow: hidden;
                         transition: all @change-duration;
 
-                        .anticon{
-                            position: absolute;
-                            bottom: -35%;
-                            left: 50%;
-                            transform: translateX(-50%) rotate(-45deg);
+                        // .anticon{
+                        //     position: absolute;
+                        //     bottom: -35%;
+                        //     left: 50%;
+                        //     transform: translateX(-50%) rotate(-45deg);
+                        //     opacity: .5;
+                        //     transition: all @change-duration;
+                        // }
+                        img{
                             opacity: .5;
-                            transition: all @change-duration;
                         }
                     }
                 }
@@ -427,6 +446,7 @@
     }
     :deep(.ant-btn) {
         border-radius: 8px;
+        height: 50px;
     }
 
     :deep(.verification-container){

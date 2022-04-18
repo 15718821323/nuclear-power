@@ -1,9 +1,5 @@
 <template>
-    <Dropdown
-        placement="bottomLeft"
-        :overlayClassName="`${prefixCls}-dropdown-overlay`"
-        :trigger="['click']"
-    >
+    <Dropdown placement="bottomLeft" :overlayClassName="`${prefixCls}-dropdown-overlay`">
         <span :class="[prefixCls, `${prefixCls}--${theme}`]" class="flex">
             <img :class="`${prefixCls}__header`" :src="getUserInfo.avatar" />
             <span :class="`${prefixCls}__info hidden md:block`">

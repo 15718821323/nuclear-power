@@ -4,7 +4,7 @@
  * @Description: 我的门户
  * @Date: 2022-04-02 14:28:54
  * @LastEditors: hebing
- * @LastEditTime: 2022-04-17 18:55:17
+ * @LastEditTime: 2022-04-18 22:31:55
  * @FilePath: /nuclear-power/src/views/personalPortal/personalPortal/myPortal/MyPortal.vue
 -->
 <template>
@@ -91,20 +91,29 @@
     import { AnnualCompletion } from '/@/components/AnnualCompletion';
     import { TaskCalendar } from '/@/components/TaskCalendar';
 
+    // 导入本地图片
+    import banner1 from '/@/assets/images/myPortal/banner1.png';
+    import banner2 from '/@/assets/images/myPortal/banner2.png';
+
+    import progressPanel1 from '/@/assets/images/myPortal/progressPanel/1.png';
+    import progressPanel2 from '/@/assets/images/myPortal/progressPanel/2.png';
+    import progressPanel3 from '/@/assets/images/myPortal/progressPanel/3.png';
+    import progressPanel4 from '/@/assets/images/myPortal/progressPanel/4.png';
+
     const loading = ref(true);
 
     const gutter = ref(16);
     const bannerList = ref([
         {
-            src: '/@/assets/images/myPortal/banner1.png',
+            src: banner1,
         },
         {
-            src: '/@/assets/images/myPortal/banner2.png',
+            src: banner2,
         },
     ]);
     const list1 = ref([
         {
-            iconSrc: '/@/assets/images/myPortal/progressPanel/1.png',
+            iconSrc: progressPanel1,
             title: '待办事项',
             percent: '100',
             label: '12',
@@ -119,7 +128,7 @@
             ],
         },
         {
-            iconSrc: '/@/assets/images/myPortal/progressPanel/2.png',
+            iconSrc: progressPanel2,
             title: '已办事项',
             percent: '30',
             label: '2',
@@ -134,7 +143,7 @@
             ],
         },
         {
-            iconSrc: '/@/assets/images/myPortal/progressPanel/3.png',
+            iconSrc: progressPanel3,
             title: '委托事项',
             percent: '30',
             label: '1',
@@ -149,7 +158,7 @@
             ],
         },
         {
-            iconSrc: '/@/assets/images/myPortal/progressPanel/4.png',
+            iconSrc: progressPanel4,
             title: '超时事项',
             percent: '80',
             label: '2',

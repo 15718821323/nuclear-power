@@ -83,6 +83,8 @@
                 block
                 @click="handleLogin"
                 :loading="loading"
+                :disabled="loginStyle.disabled"
+                :style="loginStyle.style"
             >
                 {{ t('sys.login.loginButton') }}
             </Button>
@@ -164,6 +166,22 @@
     });
     let verification_code = ref('');
     let verification = ref([]);
+
+    const loginStyle = computed(() => {
+        let style = reactive({
+            disabled: true,
+            style: {
+                background: '#004ea2',
+                borderColor: '#004ea2',
+                color: '#fefefe',
+            },
+        });
+        if (unref(formData.account) && unref(formData.password) && unref(formData.verification)) {
+            style.style = undefined;
+            style.disabled = false;
+        }
+        return style;
+    });
 
     const { validForm } = useFormValid(formRef);
 
