@@ -4,7 +4,7 @@
  * @Description: 文件列表
  * @Date: 2022-04-09 20:35:20
  * @LastEditors: hebing
- * @LastEditTime: 2022-04-16 20:38:16
+ * @LastEditTime: 2022-04-18 23:04:10
  * @FilePath: /nuclear-power/src/components/FileList/src/FileList.vue
 -->
 <template>
@@ -44,6 +44,11 @@
     import { defineComponent, computed, unref } from 'vue';
     import { SimpleCard } from '/@/components/SimpleCard';
 
+    import excel from '/@/assets/images/fileList/excel.png';
+    import word from '/@/assets/images/fileList/word.png';
+    import ppt from '/@/assets/images/fileList/ppt.png';
+    import image from '/@/assets/images/fileList/image.png';
+
     const props = defineProps({
         fileList: {
             type: Array,
@@ -61,16 +66,16 @@
             let src = null;
             switch (type) {
                 case 'excel':
-                    src = '/@/assets/images/fileList/excel.png';
+                    src = excel;
                     break;
                 case 'word':
-                    src = '/@/assets/images/fileList/word.png';
+                    src = word;
                     break;
                 case 'ppt':
-                    src = '/@/assets/images/fileList/ppt.png';
+                    src = ppt;
                     break;
                 case 'image':
-                    src = '/@/assets/images/fileList/image.png';
+                    src = image;
                     break;
 
                 default:

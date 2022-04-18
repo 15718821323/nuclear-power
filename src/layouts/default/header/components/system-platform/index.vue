@@ -4,12 +4,12 @@
  * @Description: 系统平台 菜单
  * @Date: 2022-04-11 22:48:21
  * @LastEditors: hebing
- * @LastEditTime: 2022-04-15 21:17:26
+ * @LastEditTime: 2022-04-18 23:16:33
  * @FilePath: /nuclear-power/src/layouts/default/header/components/system-platform/index.vue
 -->
 <template>
     <div @click="openDrawer(true)" :class="prefixCls">
-        <img class="icon" src="/@/assets/images/header/menu.png" alt="" />
+        <img class="icon" :src="menu_icon" alt="" />
         <BasicDrawer
             @register="register"
             :title="'系统平台'"
@@ -49,6 +49,8 @@
 
     import { useDrawer } from '/@/components/Drawer';
 
+    import menu_icon from '/@/assets/images/header/menu.png';
+
     export default defineComponent({
         name: 'SystemPlatform',
         components: { BasicDrawer, Icon, useDrawer },
@@ -70,6 +72,7 @@
                 openDrawer,
                 prefixCls,
                 menuList,
+                menu_icon,
             };
         },
     });

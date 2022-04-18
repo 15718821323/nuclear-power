@@ -102,6 +102,17 @@
 
     import { AppDarkModeToggle } from '/@/components/Application';
 
+    import img_icon1 from '/@/assets/images/systemPlatForm/news.png';
+    import img_icon2 from '/@/assets/images/systemPlatForm/purchase.png';
+    import img_icon3 from '/@/assets/images/systemPlatForm/data.png';
+    import img_icon4 from '/@/assets/images/systemPlatForm/protect.png';
+    import img_icon5 from '/@/assets/images/systemPlatForm/approve.png';
+    import img_icon6 from '/@/assets/images/systemPlatForm/download.png';
+    import img_icon7 from '/@/assets/images/systemPlatForm/manage.png';
+    import img_icon8 from '/@/assets/images/systemPlatForm/protect2.png';
+    import img_icon9 from '/@/assets/images/systemPlatForm/book.png';
+    import img_icon10 from '/@/assets/images/systemPlatForm/sys.png';
+
     export default defineComponent({
         name: 'LayoutHeader',
         components: {
@@ -172,70 +183,70 @@
             const menuList = ref([
                 {
                     title: '新闻平台',
-                    img: '/@/assets/images/systemPlatForm/news.png',
+                    img: img_icon1,
                     onClick: () => {
                         console.log('新闻平台');
                     },
                 },
                 {
                     title: '采购平台',
-                    img: '/@/assets/images/systemPlatForm/purchase.png',
+                    img: img_icon2,
                     onClick: () => {
                         console.log('采购平台');
                     },
                 },
                 {
                     title: '数据管理',
-                    img: '/@/assets/images/systemPlatForm/data.png',
+                    img: img_icon3,
                     onClick: () => {
                         console.log('数据管理');
                     },
                 },
                 {
                     title: '防护平台',
-                    img: '/@/assets/images/systemPlatForm/protect.png',
+                    img: img_icon4,
                     onClick: () => {
                         console.log('防护平台');
                     },
                 },
                 {
                     title: '审批平台',
-                    img: '/@/assets/images/systemPlatForm/approve.png',
+                    img: img_icon5,
                     onClick: () => {
                         console.log('审批平台');
                     },
                 },
                 {
                     title: '下载平台',
-                    img: '/@/assets/images/systemPlatForm/download.png',
+                    img: img_icon6,
                     onClick: () => {
                         console.log('下载平台');
                     },
                 },
                 {
                     title: '管理平台',
-                    img: '/@/assets/images/systemPlatForm/manage.png',
+                    img: img_icon7,
                     onClick: () => {
                         console.log('管理平台');
                     },
                 },
                 {
                     title: '防护平台2',
-                    img: '/@/assets/images/systemPlatForm/protect2.png',
+                    img: img_icon8,
                     onClick: () => {
                         console.log('防护平台2');
                     },
                 },
                 {
                     title: '书籍平台',
-                    img: '/@/assets/images/systemPlatForm/book.png',
+                    img: img_icon9,
                     onClick: () => {
                         console.log('书籍平台');
                     },
                 },
                 {
                     title: '系统平台',
-                    img: '/@/assets/images/systemPlatForm/sys.png',
+                    img: img_icon10,
                     onClick: () => {
                         console.log('系统平台');
                     },

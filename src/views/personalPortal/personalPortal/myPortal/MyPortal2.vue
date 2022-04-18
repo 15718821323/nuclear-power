@@ -4,7 +4,7 @@
  * @Description: 我的门户 第二种风格
  * @Date: 2022-04-17 00:10:48
  * @LastEditors: hebing
- * @LastEditTime: 2022-04-17 20:48:00
+ * @LastEditTime: 2022-04-18 23:25:21
  * @FilePath: /nuclear-power/src/views/personalPortal/personalPortal/myPortal/MyPortal2.vue
 -->
 <template>
@@ -22,7 +22,7 @@
                         />
                     </Carousel> -->
                     <div class="portal-img">
-                        <img src="/@/assets/images/myPortal/banner1.png" alt="" />
+                        <img :src="banner1" alt="" />
                     </div>
                     <ARow :gutter="gutter" class="entry-x my-4">
                         <ACol :span="12">
@@ -97,17 +97,24 @@
     const loading = ref(true);
 
     const gutter = ref(16);
-    // const bannerList = ref([
-    //     {
-    //         src: '/@/assets/images/myPortal/banner1.png',
-    //     },
-    //     {
-    //         src: '/@/assets/images/myPortal/banner2.png',
-    //     },
-    // ]);
+    // 导入本地图片
+    import banner1 from '/@/assets/images/myPortal/banner1.png';
+
+    import progressPanel1 from '/@/assets/images/myPortal/progressPanel/1.png';
+    import progressPanel2 from '/@/assets/images/myPortal/progressPanel/2.png';
+    import progressPanel3 from '/@/assets/images/myPortal/progressPanel/3.png';
+    import progressPanel4 from '/@/assets/images/myPortal/progressPanel/4.png';
+
+    import shortcutMenu1 from '/@/assets/images/myPortal/shortcutMenu/news.png';
+    import shortcutMenu2 from '/@/assets/images/myPortal/shortcutMenu/purchase.png';
+    import shortcutMenu3 from '/@/assets/images/myPortal/shortcutMenu/data.png';
+    import shortcutMenu4 from '/@/assets/images/myPortal/shortcutMenu/protect.png';
+    import shortcutMenu5 from '/@/assets/images/myPortal/shortcutMenu/approve.png';
+    import shortcutMenu6 from '/@/assets/images/myPortal/shortcutMenu/download.png';
+
     const list1 = ref([
         {
-            iconSrc: '/@/assets/images/myPortal/progressPanel/1.png',
+            iconSrc: progressPanel1,
             title: '待办事项',
             percent: '100',
             label: '12',
@@ -122,7 +129,7 @@
             ],
         },
         {
-            iconSrc: '/@/assets/images/myPortal/progressPanel/2.png',
+            iconSrc: progressPanel2,
             title: '已办事项',
             percent: '30',
             label: '2',
@@ -137,7 +144,7 @@
             ],
         },
         {
-            iconSrc: '/@/assets/images/myPortal/progressPanel/3.png',
+            iconSrc: progressPanel3,
             title: '委托事项',
             percent: '30',
             label: '1',
@@ -152,7 +159,7 @@
             ],
         },
         {
-            iconSrc: '/@/assets/images/myPortal/progressPanel/4.png',
+            iconSrc: progressPanel4,
             title: '超时事项',
             percent: '80',
             label: '2',
@@ -306,42 +313,42 @@
 
     const menuList = ref([
         {
-            img: '/@/assets/images/myPortal/shortcutMenu/news.png',
+            img: shortcutMenu1,
             title: '新闻平台',
             onClick: () => {
                 console.log('新闻平台');
             },
         },
         {
-            img: '/@/assets/images/myPortal/shortcutMenu/purchase.png',
+            img: shortcutMenu2,
             title: '采购平台',
             onClick: () => {
                 console.log('采购平台');
             },
         },
         {
-            img: '/@/assets/images/myPortal/shortcutMenu/data.png',
+            img: shortcutMenu3,
             title: '数据管理',
             onClick: () => {
                 console.log('数据管理');
             },
         },
         {
-            img: '/@/assets/images/myPortal/shortcutMenu/protect.png',
+            img: shortcutMenu4,
             title: '防护平台',
             onClick: () => {
                 console.log('防护平台');
             },
         },
         {
-            img: '/@/assets/images/myPortal/shortcutMenu/approve.png',
+            img: shortcutMenu5,
             title: '审批平台',
             onClick: () => {
                 console.log('审批平台');
             },
         },
         {
-            img: '/@/assets/images/myPortal/shortcutMenu/download.png',
+            img: shortcutMenu6,
             title: '下载平台',
             onClick: () => {
                 console.log('下载平台');

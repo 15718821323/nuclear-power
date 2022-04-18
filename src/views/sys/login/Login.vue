@@ -4,7 +4,7 @@
  * @Description: 
  * @Date: 2022-04-01 11:40:25
  * @LastEditors: hebing
- * @LastEditTime: 2022-04-18 21:29:33
+ * @LastEditTime: 2022-04-18 23:21:44
  * @FilePath: /nuclear-power/src/views/sys/login/Login.vue
 -->
 <template>
@@ -23,7 +23,7 @@
         <div class="logo">
             <!-- <AppLogo class="-enter-x" /> -->
             <div class="logo-container -enter-x">
-                <img src="/@/assets/images/logo_long.png" alt="" srcset="" />
+                <img :src="img_logo" alt="" srcset="" />
             </div>
             <span class="absolute bottom-8 left-30 -enter-x" :style="{ color: '#6184FF' }"
                 >*{{ t('sys.login.unitName') }}</span
@@ -39,7 +39,7 @@
                         @click="setLoginState(LoginStateEnum.QR_CODE)"
                     >
                         <!-- <QrcodeOutlined /> -->
-                        <img src="/@/assets/images/login/qr1.png" alt="" />
+                        <img :src="img_qr1" alt="" />
                     </span>
                     <span
                         class="qr-change-icon"
@@ -47,7 +47,7 @@
                         @click="setLoginState(LoginStateEnum.LOGIN)"
                     >
                         <!-- <DesktopOutlined /> -->
-                        <img src="/@/assets/images/login/qr2.png" alt="" />
+                        <img :src="img_qr2" alt="" />
                     </span>
                 </div>
                 <div :class="`${prefixCls}-form-container`">
@@ -108,6 +108,10 @@
     import { log } from 'console';
     import { LoginStateEnum, useLoginState } from './useLogin';
     const { setLoginState, getLoginState } = useLoginState();
+
+    import img_logo from '/@/assets/images/logo_long.png';
+    import img_qr1 from '/@/assets/images/login/qr1.png';
+    import img_qr2 from '/@/assets/images/login/qr2.png';
 
     defineProps({
         sessionTimeout: {
@@ -223,7 +227,7 @@
                 &-container {
                     width: 480px;
                     padding: 60px;
-                    min-height: 590px;
+                    min-height: 626px;
                     display: flex;
                     flex-direction: column;
                     align-items: center;

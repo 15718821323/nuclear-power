@@ -4,7 +4,7 @@
  * @Description: 我的门户
  * @Date: 2022-04-02 14:28:54
  * @LastEditors: hebing
- * @LastEditTime: 2022-04-18 22:31:55
+ * @LastEditTime: 2022-04-18 23:01:54
  * @FilePath: /nuclear-power/src/views/personalPortal/personalPortal/myPortal/MyPortal.vue
 -->
 <template>
@@ -91,6 +91,10 @@
     import { AnnualCompletion } from '/@/components/AnnualCompletion';
     import { TaskCalendar } from '/@/components/TaskCalendar';
 
+    const loading = ref(true);
+
+    const gutter = ref(16);
+
     // 导入本地图片
     import banner1 from '/@/assets/images/myPortal/banner1.png';
     import banner2 from '/@/assets/images/myPortal/banner2.png';
@@ -100,9 +104,13 @@
     import progressPanel3 from '/@/assets/images/myPortal/progressPanel/3.png';
     import progressPanel4 from '/@/assets/images/myPortal/progressPanel/4.png';
 
-    const loading = ref(true);
+    import shortcutMenu1 from '/@/assets/images/myPortal/shortcutMenu/news.png';
+    import shortcutMenu2 from '/@/assets/images/myPortal/shortcutMenu/purchase.png';
+    import shortcutMenu3 from '/@/assets/images/myPortal/shortcutMenu/data.png';
+    import shortcutMenu4 from '/@/assets/images/myPortal/shortcutMenu/protect.png';
+    import shortcutMenu5 from '/@/assets/images/myPortal/shortcutMenu/approve.png';
+    import shortcutMenu6 from '/@/assets/images/myPortal/shortcutMenu/download.png';
 
-    const gutter = ref(16);
     const bannerList = ref([
         {
             src: banner1,
@@ -312,42 +320,42 @@
 
     const menuList = ref([
         {
-            img: '/@/assets/images/myPortal/shortcutMenu/news.png',
+            img: shortcutMenu1,
             title: '新闻平台',
             onClick: () => {
                 console.log('新闻平台');
             },
         },
         {
-            img: '/@/assets/images/myPortal/shortcutMenu/purchase.png',
+            img: shortcutMenu2,
             title: '采购平台',
             onClick: () => {
                 console.log('采购平台');
             },
         },
         {
-            img: '/@/assets/images/myPortal/shortcutMenu/data.png',
+            img: shortcutMenu3,
             title: '数据管理',
             onClick: () => {
                 console.log('数据管理');
             },
         },
         {
-            img: '/@/assets/images/myPortal/shortcutMenu/protect.png',
+            img: shortcutMenu4,
             title: '防护平台',
             onClick: () => {
                 console.log('防护平台');
             },
         },
         {
-            img: '/@/assets/images/myPortal/shortcutMenu/approve.png',
+            img: shortcutMenu5,
             title: '审批平台',
             onClick: () => {
                 console.log('审批平台');
             },
         },
         {
-            img: '/@/assets/images/myPortal/shortcutMenu/download.png',
+            img: shortcutMenu6,
             title: '下载平台',
             onClick: () => {
                 console.log('下载平台');
