@@ -4,7 +4,7 @@
  * @Description: 我的门户
  * @Date: 2022-04-02 14:28:54
  * @LastEditors: hebing
- * @LastEditTime: 2022-04-18 23:01:54
+ * @LastEditTime: 2022-04-19 21:45:52
  * @FilePath: /nuclear-power/src/views/personalPortal/personalPortal/myPortal/MyPortal.vue
 -->
 <template>
@@ -122,7 +122,7 @@
     const list1 = ref([
         {
             iconSrc: progressPanel1,
-            title: '待办事项',
+            title: '待办',
             percent: '100',
             label: '12',
             dropdown: [
@@ -137,7 +137,7 @@
         },
         {
             iconSrc: progressPanel2,
-            title: '已办事项',
+            title: '已办',
             percent: '30',
             label: '2',
             dropdown: [
@@ -152,7 +152,7 @@
         },
         {
             iconSrc: progressPanel3,
-            title: '委托事项',
+            title: '委托',
             percent: '30',
             label: '1',
             dropdown: [
@@ -167,7 +167,7 @@
         },
         {
             iconSrc: progressPanel4,
-            title: '超时事项',
+            title: '超时',
             percent: '80',
             label: '2',
             dropdown: [

@@ -4,21 +4,25 @@
  * @Description: 
  * @Date: 2022-04-01 11:40:25
  * @LastEditors: hebing
- * @LastEditTime: 2022-04-18 23:21:44
+ * @LastEditTime: 2022-04-20 23:12:53
  * @FilePath: /nuclear-power/src/views/sys/login/Login.vue
 -->
 <template>
-    <div :class="prefixCls">
-        <!-- <AppLocalePicker
-            class="absolute text-white top-4 right-4 enter-x"
-            :showText="false"
-            v-if="!sessionTimeout && showLocale"
-            :style="{ color: 'white' }"
-        /> -->
-        <!-- 演示登录卡大小切换 -->
-        <span class="absolute text-white top-4 right-14 enter-x">
+    <div :class="prefixCls" class="relative">
+        <div class="absolute text-white enter-x flex" :style="{ top: '15px', right: '70px' }">
+            <!-- 演示登录卡大小切换 -->
             切换登录卡大小：<Switch v-model:checked="isLarge" />
-        </span>
+            <AppDarkModeToggle
+                class="enter-x ml-8 xl:text-gray-600"
+                :style="{ height: 'auto' }"
+                v-if="!sessionTimeout"
+            />
+            <AppLocalePicker
+                class="enter-x ml-8 xl:text-gray-600 flex"
+                :showText="false"
+                v-if="!sessionTimeout && showLocale"
+            />
+        </div>
 
         <div class="logo">
             <!-- <AppLogo class="-enter-x" /> -->
@@ -94,7 +98,7 @@
         DesktopOutlined,
         QrcodeOutlined,
     } from '@ant-design/icons-vue';
-    import { AppLogo } from '/@/components/Application';
+    // import { AppLogo } from '/@/components/Application';
     import { AppLocalePicker, AppDarkModeToggle } from '/@/components/Application';
     import LoginForm from './LoginForm.vue';
     import ForgetPasswordForm from './ForgetPasswordForm.vue';
@@ -124,7 +128,7 @@
     const { t } = useI18n();
     const localeStore = useLocaleStore();
     const showLocale = localeStore.getShowPicker;
-    const title = computed(() => globSetting?.title ?? '');
+    // const title = computed(() => globSetting?.title ?? '');
 
     // 控制登录卡片大小
     const isLarge = ref<boolean>(false);
@@ -232,7 +236,7 @@
                     flex-direction: column;
                     align-items: center;
                     :deep(.ant-form){
-                        min-height: 313px;
+                        min-height: 340px;
                         width: 100%;
                     }
                 }
@@ -344,6 +348,7 @@
                         margin-left: -12px;
                         border-top-left-radius: 0;
                         border-bottom-left-radius: 0;
+                        height: 40px;
                     }
                 }
             }

@@ -199,32 +199,12 @@
     @prefix-cls-detail: ~'@{namespace}-basic-drawer__detail';
 
     .@{prefix-cls} {
-        @filter: 0px;
         @border-radius: 10px;
         .ant-drawer-content {
-            background: transparent;
             border-top-left-radius: @border-radius;
             border-bottom-left-radius: @border-radius;
             overflow: hidden;
-            z-index: 1;
-            &:after {
-                content: ' ';
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: 100%;
-                border-top-left-radius: @border-radius;
-                border-bottom-left-radius: @border-radius;
-
-                background: rgba(255, 255, 255, 0.9);
-                -webkit-filter: blur(@filter);
-                -moz-filter: blur(@filter);
-                -ms-filter: blur(@filter);
-                -o-filter: blur(@filter);
-                filter: blur(@filter);
-                z-index: -1;
-            }
+            .filterBackground();
         }
         .ant-drawer-wrapper-body {
             overflow: hidden;
@@ -284,9 +264,7 @@
     [data-theme='dark'] {
         .@{prefix-cls} {
             .ant-drawer-content {
-                &::after {
-                    background: rgba(0, 0, 0, 0.9);
-                }
+                .filterBackground_dark();
             }
         }
     }

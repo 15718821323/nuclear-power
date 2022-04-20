@@ -19,6 +19,7 @@
                     v-model:value="formData.sms"
                     :placeholder="t('sys.login.smsCode')"
                     :btnType="'primary'"
+                    :style="{ height: '40px' }"
                 />
             </FormItem>
 

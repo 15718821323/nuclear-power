@@ -145,29 +145,9 @@
             //     width: 300px;
             // }
             @border-radius: 10px;
-            @filter: 8px;
             .ant-popover-inner {
-                background: transparent;
                 border-radius: @border-radius;
-                z-index: 1;
-
-                &::after {
-                    content: ' ';
-                    position: absolute;
-                    left: 0;
-                    top: 0;
-                    width: 100%;
-                    height: 100%;
-                    border-radius: @border-radius;
-
-                    background: rgba(255, 255, 255, 0.9);
-                    -webkit-filter: blur(@filter);
-                    -moz-filter: blur(@filter);
-                    -ms-filter: blur(@filter);
-                    -o-filter: blur(@filter);
-                    filter: blur(@filter);
-                    z-index: -1;
-                }
+                .filterBackground();
             }
         }
 
@@ -192,9 +172,7 @@
                     }
                 }
                 .ant-popover-inner {
-                    &::after {
-                        background: rgba(0, 0, 0, 0.9);
-                    }
+                    .filterBackground_dark();
                 }
             }
             &__title {

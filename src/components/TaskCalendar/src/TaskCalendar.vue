@@ -4,7 +4,7 @@
  * @Description: 日历组件
  * @Date: 2022-04-10 12:14:16
  * @LastEditors: hebing
- * @LastEditTime: 2022-04-18 22:15:49
+ * @LastEditTime: 2022-04-20 23:24:33
  * @FilePath: /nuclear-power/src/components/TaskCalendar/src/TaskCalendar.vue
 -->
 <template>
@@ -430,7 +430,8 @@
             border-radius: 10px;
             overflow: hidden;
             .task-list {
-                width: 100%;
+                width: 250px;
+                // width: 100%;
                 &-item {
                     width: 100%;
                     padding: 3px 20px 3px 8px;
@@ -487,7 +488,6 @@
         }
         :deep(.ant-popover-title) {
             background: rgba(50, 120, 255, 0.18);
-            backdrop-filter: blur(21px);
             padding: 10px 16px;
 
             display: flex;
@@ -522,29 +522,9 @@
             overflow: hidden;
         }
 
-        @filter: 12px;
         :deep(.ant-popover-inner) {
-            background: transparent;
-
             overflow: hidden;
-            width: 280px;
-            z-index: 1;
-            &:after {
-                content: ' ';
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: 100%;
-
-                background: rgba(255, 255, 255, 0.8);
-                -webkit-filter: blur(@filter);
-                -moz-filter: blur(@filter);
-                -ms-filter: blur(@filter);
-                -o-filter: blur(@filter);
-                filter: blur(@filter);
-                z-index: -1;
-            }
+            .filterBackground();
         }
 
         :deep(.ant-fullcalendar-header) {
@@ -582,13 +562,14 @@
     }
 
     [data-theme='dark'] {
-        // .task-calendar {
-        //     :deep(.ant-popover-inner) {
-        //         &:after {
-        //             background: rgba(0, 0, 0, 0.9);
-        //         }
-        //     }
-        // }
+        .task-calendar {
+            :deep(.ant-popover-inner) {
+                .filterBackground_dark();
+            }
+            :deep(.month-picker-trigger) {
+                color: #f2f2f2;
+            }
+        }
         .task-calendar-header-title {
             color: #e4e4e4;
         }

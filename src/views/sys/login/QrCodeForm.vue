@@ -10,9 +10,9 @@
             <Divider class="enter-x" :style="{ color: '#cbcbcb' }">{{
                 t('sys.login.scanSign')
             }}</Divider>
-            <Button size="large" block class="mt-4 enter-x" @click="handleBackLogin">
+            <!-- <Button size="large" block class="mt-4 enter-x" @click="handleBackLogin">
                 {{ t('sys.login.backSignIn') }}
-            </Button>
+            </Button> -->
         </div>
     </template>
 </template>

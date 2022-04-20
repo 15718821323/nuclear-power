@@ -4,7 +4,7 @@
  * @Description: 快捷菜单
  * @Date: 2022-04-08 22:55:41
  * @LastEditors: hebing
- * @LastEditTime: 2022-04-15 23:09:14
+ * @LastEditTime: 2022-04-20 23:16:00
  * @FilePath: /nuclear-power/src/components/ShortcutMenu/src/ShortcutMenu.vue
 -->
 <template>
@@ -12,17 +12,22 @@
         <SimpleCard :onMore="handlerMore" title="快捷菜单" icon="ant-design:thunderbolt-filled">
             <div class="shortcut-menu-body">
                 <div
-                    class="menu-item"
-                    v-for="(menu, key) in menuList"
-                    :key="key"
-                    @click="
-                        () => {
-                            menu.onClick && menu.onClick();
-                        }
-                    "
+                    class="shortcut-menu-body-container"
+                    :style="{ width: `${menuList.length * 68}px` }"
                 >
-                    <img class="menu-item-icon" :src="menu.img" alt="" />
-                    <span class="menu-item-title"> {{ menu.title }} </span>
+                    <div
+                        class="menu-item"
+                        v-for="(menu, key) in menuList"
+                        :key="key"
+                        @click="
+                            () => {
+                                menu.onClick && menu.onClick();
+                            }
+                        "
+                    >
+                        <img class="menu-item-icon" :src="menu.img" alt="" />
+                        <span class="menu-item-title"> {{ menu.title }} </span>
+                    </div>
                 </div>
             </div>
         </SimpleCard>
@@ -49,8 +54,14 @@
     .shortcut-menu {
         &-body {
             width: 100%;
-            display: flex;
-            justify-content: space-around;
+            overflow-x: auto;
+            overflow-y: hidden;
+
+            &-container {
+                min-width: 100%;
+                display: flex;
+                justify-content: space-around;
+            }
 
             .menu-item {
                 display: flex;

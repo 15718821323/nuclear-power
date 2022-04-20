@@ -4,7 +4,7 @@
  * @Description: 带标题的普通卡片
  * @Date: 2022-04-15 21:28:27
  * @LastEditors: hebing
- * @LastEditTime: 2022-04-17 00:34:46
+ * @LastEditTime: 2022-04-20 22:00:21
  * @FilePath: /nuclear-power/src/components/SimpleCard/src/SimpleCard.vue
 -->
 <template>
@@ -54,7 +54,6 @@
     .simple-card {
         height: 100%;
         border-radius: @border-radius;
-        backdrop-filter: blur(4px);
         background: white;
         padding: 15px;
         overflow: hidden;
@@ -134,28 +133,7 @@
     }
     [data-theme='dark'] {
         .simple-card {
-            // background: rgba(34, 37, 44, 0.8);
-            background: transparent;
-            z-index: 1;
-
-            @filter: 0;
-            &:after {
-                content: ' ';
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: 100%;
-                border-radius: @border-radius;
-
-                background: rgba(34, 37, 44, 0.8);
-                -webkit-filter: blur(@filter);
-                -moz-filter: blur(@filter);
-                -ms-filter: blur(@filter);
-                -o-filter: blur(@filter);
-                filter: blur(@filter);
-                z-index: -1;
-            }
+            background: rgba(34, 37, 44, 0.8);
         }
         .simple-card-header-title {
             color: #e4e4e4;

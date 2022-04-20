@@ -4,7 +4,7 @@
  * @Description: 进度面板
  * @Date: 2022-04-06 14:39:47
  * @LastEditors: hebing
- * @LastEditTime: 2022-04-15 23:30:09
+ * @LastEditTime: 2022-04-19 21:46:50
  * @FilePath: /nuclear-power/src/components/ProgressPanel/src/ProgressPanel.vue
 -->
 <template>
@@ -53,9 +53,9 @@
             margin: 0 auto;
         }
         &-item {
-            min-width: 90px;
+            min-width: 80px;
             max-width: 113px;
-            width: 25%;
+            width: 24%;
             height: 170px;
             background: #2a3456;
             border-radius: 24px;
